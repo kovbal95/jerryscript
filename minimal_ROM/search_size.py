@@ -1,6 +1,12 @@
 import re
 import sys
 pattern2 = re.compile('0x[0-9abcdef]+')
+def kellenek(line):
+    if line.find(" .text ")>=0:
+        return True
+    if line.find(" .rodata ")>=0:
+        return True
+    return False
 def printsor(sor):
     for elem in sor:
         for line in elem[1]:
@@ -74,7 +80,7 @@ for line in f:
     if sorban:
         akt.append(line)
         kellhossz=True
-    if line.find(" .text ")>=0:
+    if kellenek(line):
         akt=[line]
         sorban=True
 if (len(sys.argv)==1):

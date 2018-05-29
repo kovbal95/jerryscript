@@ -52,6 +52,7 @@
                 0x00000000000000f6                ecma_find_named_property
                 0x00000000000000f6                opfunc_addition
                 0x00000000000000f0                floor
+                0x00000000000000ed                cbc_flags
                 0x00000000000000ec                ecma_property_hashmap_find
                 0x00000000000000e4                nextafter
                 0x00000000000000de                ecma_op_from_property_descriptor
@@ -136,6 +137,8 @@
                 0x0000000000000060                ecma_string_get_utf8_size
                 0x0000000000000060                lit_is_ex_utf8_string_magic
                 0x0000000000000060                vm_op_delete_prop
+                0x0000000000000060                ecma_builtin_object_property_descriptor_list
+                0x0000000000000060                ecma_builtin_global_property_descriptor_list
                 0x000000000000005e                jerry_set_property_by_index
                 0x000000000000005e                ecma_op_to_object
                 0x000000000000005e                lit_char_is_identifier_part_character
@@ -178,6 +181,7 @@
                 0x000000000000004c                ecma_compare_ecma_strings
                 0x000000000000004c                ecma_raise_standard_error
                 0x000000000000004c                lit_read_code_unit_from_hex
+                0x000000000000004b                cbc_ext_flags
                 0x000000000000004a                ecma_value_assign_value
                 0x000000000000004a                ecma_op_delete_binding
                 0x000000000000004a                lit_char_is_white_space
@@ -267,6 +271,7 @@
                 0x0000000000000030                ecma_builtin_object_dispatch_call
                 0x0000000000000030                lexer_check_colon
                 0x0000000000000030                jerry_port_get_time_zone
+                0x0000000000000030                ecma_builtin_object_prototype_property_descriptor_list
                 0x000000000000002e                jerry_construct_object
                 0x000000000000002e                ecma_init_gc_info
                 0x000000000000002e                ecma_op_object_has_instance
@@ -293,6 +298,7 @@
                 0x000000000000002a                ecma_integer_multiply
                 0x000000000000002a                ecma_free_value
                 0x000000000000002a                opfunc_unary_operation
+                0x000000000000002a                ecma_builtin_function_prototype_property_descriptor_list
                 0x0000000000000028                jerry_free_property_descriptor_fields
                 0x0000000000000028                ecma_create_decl_lex_env
                 0x0000000000000028                ecma_string_to_property_name
@@ -362,6 +368,7 @@
                 0x000000000000001e                ecma_op_array_list_lazy_property_names
                 0x000000000000001e                ecma_op_external_function_list_lazy_property_names
                 0x000000000000001e                parser_cbc_stream_alloc_page
+                0x000000000000001e                ecma_builtin_error_prototype_property_descriptor_list
                 0x000000000000001c                ecma_object_class_is
                 0x000000000000001c                lit_char_is_line_terminator
                 0x000000000000001c                lit_char_is_hex_digit
@@ -443,6 +450,8 @@
                 0x0000000000000012                ecma_new_values_collection
                 0x0000000000000012                ecma_op_object_has_property
                 0x0000000000000012                lit_utf8_decr
+                0x0000000000000012                ecma_builtin_error_property_descriptor_list
+                0x0000000000000012                ecma_builtin_function_property_descriptor_list
                 0x0000000000000010                cli_init
                 0x0000000000000010                jerry_merge_snapshots
                 0x0000000000000010                jerry_eval
@@ -528,6 +537,7 @@
                 0x000000000000000c                jerry_port_default_is_abort_on_fail
                 0x000000000000000c                jerryx_port_handler_print_char
                 0x000000000000000c                __aeabi_idiv0
+                0x000000000000000c                ecma_builtin_type_error_thrower_property_descriptor_list
                 0x000000000000000a                ecma_set_object_is_builtin
                 0x000000000000000a                ecma_get_lex_env_outer_reference
                 0x000000000000000a                ecma_get_property_list
@@ -572,6 +582,7 @@
                 0x0000000000000008                ecma_raise_type_error
                 0x0000000000000008                ecma_raise_uri_error
                 0x0000000000000008                ecma_is_normal_or_arrow_function
+                0x0000000000000008                ecma_error_mappings
                 0x0000000000000006                jerry_gc
                 0x0000000000000006                ecma_get_lex_env_binding_object
                 0x0000000000000006                ecma_is_property_writable
@@ -653,6 +664,8 @@
                 0x0000000000000004                opfunc_equality
  *fill*         0x0000000000000004        0x4 
  *fill*         0x0000000000000004        0x4 
+                0x0000000000000004                ecma_number_exponent_bias
+ *fill*         0x0000000000000004        0x4 
                 0x0000000000000002                jerry_debugger_stop
                 0x0000000000000002                jerry_debugger_continue
                 0x0000000000000002                jerry_debugger_stop_at_breakpoint
@@ -660,6 +673,7 @@
  *fill*         0x0000000000000002        0x2 
                 0x0000000000000002                jerry_set_vm_exec_stop_callback
                 0x0000000000000002                ecma_check_value_type_is_spec_defined
+ *fill*         0x0000000000000002        0x2 
  *fill*         0x0000000000000002        0x2 
  *fill*         0x0000000000000002        0x2 
  *fill*         0x0000000000000002        0x2 
