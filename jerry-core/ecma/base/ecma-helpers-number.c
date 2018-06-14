@@ -186,6 +186,15 @@ ecma_number_unpack (ecma_number_t num, /**< ecma-number */
  */
 const int32_t ecma_number_exponent_bias = 1023;
 
+#elif CONFIG_ECMA_NUMBER_TYPE == CONFIG_ECMA_NUMBER_INT
+
+
+
+
+
+
+
+
 #endif /* CONFIG_ECMA_NUMBER_TYPE == CONFIG_ECMA_NUMBER_FLOAT32 */
 
 /**
@@ -193,6 +202,7 @@ const int32_t ecma_number_exponent_bias = 1023;
  *
  * @return normalized fraction field of number
  */
+#ifndef JUST_INT
 static uint64_t
 ecma_number_get_fraction_field (ecma_number_t num) /**< ecma-number */
 {
@@ -202,12 +212,13 @@ ecma_number_get_fraction_field (ecma_number_t num) /**< ecma-number */
 
   return fraction;
 } /* ecma_number_get_fraction_field */
-
+#endif /* JUST_INT */
 /**
  * Get exponent of number
  *
  * @return exponent corresponding to normalized fraction of number
  */
+#ifndef JUST_INT
 static uint32_t
 ecma_number_get_biased_exponent_field (ecma_number_t num) /**< ecma-number */
 {
@@ -217,12 +228,14 @@ ecma_number_get_biased_exponent_field (ecma_number_t num) /**< ecma-number */
 
   return biased_exp;
 } /* ecma_number_get_biased_exponent_field */
+#endif /* JUST_INT */
 
 /**
  * Get sign bit of number
  *
  * @return 0 or 1 - value of sign bit
  */
+#ifndef JUST_INT
 static uint32_t
 ecma_number_get_sign_field (ecma_number_t num) /**< ecma-number */
 {
@@ -232,6 +245,7 @@ ecma_number_get_sign_field (ecma_number_t num) /**< ecma-number */
 
   return sign;
 } /* ecma_number_get_sign_field */
+#endif /* JUST_INT */
 
 /**
  * Check if ecma-number is NaN
@@ -240,6 +254,7 @@ ecma_number_get_sign_field (ecma_number_t num) /**< ecma-number */
                   fraction is filled with anything but not all zero bits,
  *         false - otherwise
  */
+#ifndef JUST_INT
 inline bool JERRY_ATTR_ALWAYS_INLINE
 ecma_number_is_nan (ecma_number_t num) /**< ecma-number */
 {
@@ -258,12 +273,27 @@ ecma_number_is_nan (ecma_number_t num) /**< ecma-number */
 
   return is_nan;
 } /* ecma_number_is_nan */
+#else
+inline bool JERRY_ATTR_ALWAYS_INLINE
+ecma_number_is_nan (ecma_number_t num) /**< ecma-number */
+{
+  union
+  {
+    bool inf;
+    bool nan;
+    ecma_number_t num;
+  } u;
+  u.num=num;
+  return u.nan;
+} /* ecma_number_is_nan */
+#endif /* JUST_INT */
 
 /**
  * Make a NaN.
  *
  * @return NaN value
  */
+#ifndef JUST_INT
 ecma_number_t
 ecma_number_make_nan (void)
 {
@@ -271,6 +301,20 @@ ecma_number_make_nan (void)
                            (1u << ECMA_NUMBER_BIASED_EXP_WIDTH) - 1u,
                            1u);
 } /* ecma_number_make_nan */
+#else
+ecma_number_t
+ecma_number_make_nan (void)
+{
+  union
+  {
+    bool inf;
+    bool nan;
+    ecma_number_t num;
+  } u;
+  u.nan=true;
+  return u.num;
+} /* ecma_number_make_nan */
+#endif /* JUST_INT */
 
 /**
  * Make an Infinity.
@@ -278,6 +322,7 @@ ecma_number_make_nan (void)
  * @return if !sign - +Infinity value,
  *         else - -Infinity value.
  */
+#ifndef JUST_INT
 ecma_number_t
 ecma_number_make_infinity (bool sign) /**< true - for negative Infinity,
                                            false - for positive Infinity */
@@ -286,6 +331,22 @@ ecma_number_make_infinity (bool sign) /**< true - for negative Infinity,
                            (1u << ECMA_NUMBER_BIASED_EXP_WIDTH) - 1u,
                            0u);
 } /* ecma_number_make_infinity */
+#else
+ecma_number_t
+ecma_number_make_infinity (bool sign) /**< true - for negative Infinity,
+                                           false - for positive Infinity */
+{
+  union
+  {
+    bool inf;
+    bool nan;
+    ecma_number_t num;
+  } u;
+  u.num=(sign?-1:1);
+  u.inf=true;
+  return u.num;
+} /* ecma_number_make_infinity */
+#endif /* JUST_INT */
 
 /**
  * Check if ecma-number is negative
@@ -293,6 +354,7 @@ ecma_number_make_infinity (bool sign) /**< true - for negative Infinity,
  * @return true - if sign bit of ecma-number is set
  *         false - otherwise
  */
+#ifndef JUST_INT
 inline bool JERRY_ATTR_ALWAYS_INLINE
 ecma_number_is_negative (ecma_number_t num) /**< ecma-number */
 {
@@ -301,6 +363,13 @@ ecma_number_is_negative (ecma_number_t num) /**< ecma-number */
   /* IEEE-754 2008, 3.4 */
   return (ecma_number_get_sign_field (num) != 0);
 } /* ecma_number_is_negative */
+#else
+inline bool JERRY_ATTR_ALWAYS_INLINE
+ecma_number_is_negative (ecma_number_t num) /**< ecma-number */
+{
+  return num<0;
+} /* ecma_number_is_negative */
+#endif /* JUST_INT */
 
 /**
  * Check if ecma-number is zero
@@ -308,6 +377,7 @@ ecma_number_is_negative (ecma_number_t num) /**< ecma-number */
  * @return true - if fraction is zero and biased exponent is zero,
  *         false - otherwise
  */
+#ifndef JUST_INT
 bool
 ecma_number_is_zero (ecma_number_t num) /**< ecma-number */
 {
@@ -325,6 +395,13 @@ ecma_number_is_zero (ecma_number_t num) /**< ecma-number */
 
   return is_zero;
 } /* ecma_number_is_zero */
+#else
+bool
+ecma_number_is_zero (ecma_number_t num) /**< ecma-number */
+{
+  return num==0;
+} /* ecma_number_is_zero */
+#endif
 
 /**
  * Check if number is infinity
@@ -333,6 +410,7 @@ ecma_number_is_zero (ecma_number_t num) /**< ecma-number */
  *                fraction is filled with zero bits,
  *         false - otherwise
  */
+#ifndef JUST_INT
 bool
 ecma_number_is_infinity (ecma_number_t num) /**< ecma-number */
 {
@@ -345,12 +423,27 @@ ecma_number_is_infinity (ecma_number_t num) /**< ecma-number */
   return ((biased_exp  == (1u << ECMA_NUMBER_BIASED_EXP_WIDTH) - 1)
           && (fraction == 0));
 } /* ecma_number_is_infinity */
+#else
+bool
+ecma_number_is_infinity (ecma_number_t num) /**< ecma-number */
+{
+  union
+  {
+    bool inf;
+    bool nan;
+    ecma_number_t num;
+  } u;
+  u.num=num;
+  return u.inf;
+} /* ecma_number_is_infinity */
+#endif /* JUST_INT */
 
 /**
  * Get fraction and exponent of the number
  *
  * @return shift of dot in the fraction
  */
+#ifndef JUST_INT
 int32_t
 ecma_number_get_fraction_and_exponent (ecma_number_t num, /**< ecma-number */
                                        uint64_t *out_fraction_p, /**< [out] fraction of the number */
@@ -404,12 +497,14 @@ ecma_number_get_fraction_and_exponent (ecma_number_t num, /**< ecma-number */
   *out_exponent_p = exponent;
   return ECMA_NUMBER_FRACTION_WIDTH;
 } /* ecma_number_get_fraction_and_exponent */
+#endif /* JUST_INT */
 
 /**
  * Make normalised positive Number from given fraction and exponent
  *
  * @return ecma-number
  */
+#ifndef JUST_INT
 ecma_number_t
 ecma_number_make_normal_positive_from_fraction_and_exponent (uint64_t fraction, /**< fraction */
                                                              int32_t exponent) /**< exponent */
@@ -423,12 +518,14 @@ ecma_number_make_normal_positive_from_fraction_and_exponent (uint64_t fraction, 
                            biased_exp,
                            fraction & ~(1ull << ECMA_NUMBER_FRACTION_WIDTH));
 } /* ecma_number_make_normal_positive_from_fraction_and_exponent */
+#endif /* JUST_INT */
 
 /**
  * Make Number of given sign from given mantissa value and binary exponent
  *
  * @return ecma-number (possibly Infinity of specified sign)
  */
+#ifndef JUST_INT
 ecma_number_t
 ecma_number_make_from_sign_mantissa_and_exponent (bool sign, /**< true - for negative sign,
                                                                   false - for positive sign */
@@ -508,12 +605,14 @@ ecma_number_make_from_sign_mantissa_and_exponent (bool sign, /**< true - for neg
                            biased_exp,
                            mantissa);
 } /* ecma_number_make_from_sign_mantissa_and_exponent */
+#endif /* JUST_INT */
 
 /**
  * Get previous representable ecma-number
  *
  * @return maximum ecma-number that is less compared to passed argument
  */
+#ifndef JUST_INT
 ecma_number_t
 ecma_number_get_prev (ecma_number_t num) /**< ecma-number */
 {
@@ -543,12 +642,24 @@ ecma_number_get_prev (ecma_number_t num) /**< ecma-number */
                            biased_exp,
                            fraction);
 } /* ecma_number_get_prev */
+#else /* JUST_INT */
+/* JUST_INT */
+ecma_number_t
+ecma_number_get_prev (ecma_number_t num) /**< ecma-number */
+{
+  if (num == 0) {
+    return 0;
+  }
+  return num-1;
+}
+#endif /* JUST_INT */
 
 /**
  * Get next representable ecma-number
  *
  * @return minimum ecma-number that is greater compared to passed argument
  */
+#ifndef JUST_INT
 ecma_number_t
 ecma_number_get_next (ecma_number_t num) /**< ecma-number */
 {
@@ -582,12 +693,22 @@ ecma_number_get_next (ecma_number_t num) /**< ecma-number */
                            biased_exp,
                            fraction);
 } /* ecma_number_get_next */
+#else /* JUST_INT */
+/* JUST_INT */
+ecma_number_t
+ecma_number_get_next (ecma_number_t num) /**< ecma-number */
+{
+  if (num == UINT32_MAX) return num;
+  return num+1;
+}
+#endif /* JUST_INT */
 
 /**
  * Truncate fractional part of the number
  *
  * @return integer part of the number
  */
+#ifndef JUST_INT
 ecma_number_t
 ecma_number_trunc (ecma_number_t num) /**< ecma-number */
 {
@@ -622,6 +743,13 @@ ecma_number_trunc (ecma_number_t num) /**< ecma-number */
     return num;
   }
 } /* ecma_number_trunc */
+#else
+ecma_number_t
+ecma_number_trunc (ecma_number_t num) /**< ecma-number */
+{
+  return num;
+} /* ecma_number_trunc */
+#endif
 
 /**
  * Calculate remainder of division of two numbers,

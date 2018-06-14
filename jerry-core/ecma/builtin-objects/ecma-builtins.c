@@ -664,6 +664,7 @@ ecma_builtin_try_to_instantiate_property (ecma_object_t *object_p, /**< object *
       }
       else if (curr_property_p->value < ECMA_BUILTIN_NUMBER_NAN)
       {
+        #ifndef JUST_INT
         static const ecma_number_t builtin_number_list[] =
         {
           ECMA_NUMBER_MAX_VALUE,
@@ -677,7 +678,13 @@ ecma_builtin_try_to_instantiate_property (ecma_object_t *object_p, /**< object *
           ECMA_NUMBER_SQRT2,
           ECMA_NUMBER_SQRT_1_2
         };
-
+        #else /* JUST_INT defined */
+        static const ecma_number_t builtin_number_list[] =
+        {
+          ECMA_NUMBER_MAX_VALUE,
+          ECMA_NUMBER_MIN_VALUE
+        };
+        #endif /* JUST_INT */
         num = builtin_number_list[curr_property_p->value - ECMA_BUILTIN_NUMBER_MAX];
       }
       else

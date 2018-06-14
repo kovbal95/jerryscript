@@ -261,6 +261,8 @@ ecma_new_ecma_string_from_utf8 (const lit_utf8_byte_t *string_p, /**< utf-8 stri
  *
  * @return pointer to ecma-string descriptor
  */
+
+ #ifndef OFF_CESU8
 ecma_string_t *
 ecma_new_ecma_string_from_utf8_converted_to_cesu8 (const lit_utf8_byte_t *string_p, /**< utf-8 string */
                                                    lit_utf8_size_t string_size) /**< utf-8 string size */
@@ -374,7 +376,7 @@ ecma_new_ecma_string_from_utf8_converted_to_cesu8 (const lit_utf8_byte_t *string
 
   return string_desc_p;
 } /* ecma_new_ecma_string_from_utf8_converted_to_cesu8 */
-
+#endif /* OFF_CESU8 */
 /**
  * Allocate new ecma-string and fill it with cesu-8 character which represents specified code unit
  *

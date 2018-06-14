@@ -359,6 +359,7 @@
  *
  * @return ecma-number
  */
+#ifndef JUST_INT
 ecma_number_t
 ecma_utf8_string_to_number (const lit_utf8_byte_t *str_p, /**< utf-8 string */
                             lit_utf8_size_t str_size) /**< string size */
@@ -798,6 +799,15 @@ ecma_utf8_string_to_number (const lit_utf8_byte_t *str_p, /**< utf-8 string */
 #endif /* CONFIG_ECMA_NUMBER_TYPE == CONFIG_ECMA_NUMBER_FLOAT64 */
 } /* ecma_utf8_string_to_number */
 
+#else
+ecma_number_t
+ecma_utf8_string_to_number (const lit_utf8_byte_t *str_p, /**< utf-8 string */
+                            lit_utf8_size_t str_size)
+{
+  ecma_string_t *str = ecma_new_ecma_string_from_utf8(str_p, str_size);
+  return ecma_string_to_number(str);
+}
+#endif /* JUST_INT */
 /**
  * ECMA-defined conversion of UInt32 to String (zero-terminated).
  *
@@ -835,6 +845,7 @@ ecma_uint32_to_utf8_string (uint32_t value, /**< value to convert */
   return bytes_copied;
 } /* ecma_uint32_to_utf8_string */
 
+#ifndef JUST_INT
 /**
  * ECMA-defined conversion of Number value to UInt32 value
  *
@@ -893,6 +904,13 @@ ecma_number_to_uint32 (ecma_number_t num) /**< ecma-number */
 
   return ret;
 } /* ecma_number_to_uint32 */
+#else
+uint32_t
+ecma_number_to_uint32 (ecma_number_t num) /**< ecma-number */
+{
+  return (uint32_t) num;
+}
+#endif
 
 /**
  * ECMA-defined conversion of Number value to Int32 value
