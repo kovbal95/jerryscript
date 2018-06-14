@@ -39,3 +39,5 @@ docs/doxygen
 # Tests
 tests/test262/
 .vs
+# temp files
+minimal_ROM/temp.log

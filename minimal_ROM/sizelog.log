@@ -1,11 +1,8 @@
- .text          0x000000000001afd8     0x1a8c ../lib/libjerry-core.a(vm.c.o)
+ .text          0x000000000001a168     0x1ab4 ../lib/libjerry-core.a(vm.c.o)
                 0x000000000000007c                vm_run
-                0x0000000000000078                vm_run_eval
+                0x000000000000007c                vm_run_eval
                 0x0000000000000034                vm_run_global
- .text          0x000000000001f560     0x14a4 ../lib/libjerry-core.a(js-parser-statm.c.o)
-                0x0000000000000f3c                parser_parse_statements
-                0x00000000000000d6                parser_free_jumps
- .text          0x0000000000010e20     0x1288 ../lib/libjerry-core.a(jerry.c.o)
+ .text          0x0000000000011058     0x1210 ../lib/libjerry-core.a(jerry.c.o)
                 0x0000000000000156                jerry_define_own_property
                 0x00000000000000d8                jerry_get_own_property_descriptor
                 0x0000000000000092                jerry_foreach_object_property
@@ -20,23 +17,21 @@
                 0x0000000000000054                jerry_cleanup
                 0x0000000000000054                jerry_value_get_type
                 0x0000000000000052                jerry_run
-                0x000000000000004e                jerry_parse_function
                 0x000000000000004e                jerry_get_property_by_index
                 0x000000000000004c                jerry_get_context_data
-                0x000000000000004c                jerry_run_simple
                 0x0000000000000046                jerry_substring_to_char_buffer
                 0x0000000000000046                jerry_substring_to_utf8_char_buffer
                 0x0000000000000046                jerry_delete_property_by_index
+                0x0000000000000044                jerry_run_simple
                 0x0000000000000044                jerry_get_object_native_pointer
                 0x0000000000000042                jerry_string_to_char_buffer
                 0x0000000000000042                jerry_string_to_utf8_char_buffer
-                0x0000000000000040                jerry_parse
                 0x000000000000003e                jerry_get_prototype
                 0x000000000000003c                jerry_get_array_length
                 0x000000000000003c                jerry_objects_foreach
                 0x000000000000003a                jerry_get_object_native_handle
-                0x0000000000000036                jerry_get_number_value
                 0x0000000000000036                jerry_get_object_keys
+                0x0000000000000034                jerry_get_number_value
                 0x0000000000000034                jerry_create_error_sz
                 0x0000000000000032                jerry_set_object_native_handle
                 0x0000000000000032                jerry_set_object_native_pointer
@@ -76,6 +71,8 @@
                 0x0000000000000014                jerry_create_string_from_utf8
                 0x0000000000000014                jerry_create_string
                 0x0000000000000012                jerry_json_stringfy
+                0x0000000000000010                jerry_parse
+                0x0000000000000010                jerry_parse_function
                 0x0000000000000010                jerry_eval
                 0x0000000000000010                jerry_get_global_object
                 0x0000000000000010                jerry_create_promise
@@ -117,50 +114,32 @@
                 0x0000000000000004                jerry_get_typedarray_type
                 0x0000000000000004                jerry_get_typedarray_length
                 0x0000000000000002                jerry_set_vm_exec_stop_callback
- .text          0x000000000001e2f8     0x1268 ../lib/libjerry-core.a(js-lexer.c.o)
-                0x0000000000000386                lexer_construct_literal_object
-                0x00000000000002b2                lexer_next_token
-                0x0000000000000234                lexer_parse_string
-                0x00000000000001ae                lexer_hex_to_character
-                0x0000000000000108                lexer_construct_number_object
-                0x00000000000000fe                lexer_expect_object_literal_id
-                0x00000000000000b8                lexer_compare_identifier_to_current
-                0x00000000000000ac                lexer_scan_identifier
-                0x00000000000000a6                lexer_convert_push_number_to_push_literal
-                0x0000000000000086                lexer_expect_identifier
-                0x0000000000000054                lexer_construct_function_object
-                0x0000000000000030                lexer_check_colon
-                0x0000000000000006                lexer_construct_regexp_object
- .text          0x0000000000019e44     0x1164 ../lib/libjerry-core.a(js-parser.c.o)
-                0x0000000000000f06                parser_raise_error
-                0x00000000000001cc                parser_parse_function
-                0x0000000000000048                parser_parse_script
- .text          0x0000000000013e98     0x1108 ../lib/libjerry-core.a(ecma-helpers-string.c.o)
-                0x00000000000001f0                ecma_append_chars_to_string
-                0x000000000000013e                ecma_string_get_chars
+ .text          0x0000000000014210     0x1084 ../lib/libjerry-core.a(ecma-helpers-string.c.o)
+                0x00000000000001e6                ecma_append_chars_to_string
                 0x0000000000000138                ecma_substring_copy_to_utf8_buffer
+                0x0000000000000130                ecma_string_get_chars
                 0x0000000000000108                ecma_new_ecma_string_from_utf8_converted_to_cesu8
                 0x00000000000000ca                ecma_new_ecma_string_from_utf8
                 0x00000000000000ca                ecma_compare_ecma_strings_relational
-                0x00000000000000b0                ecma_concat_ecma_strings
-                0x000000000000009e                ecma_string_trim
+                0x00000000000000a2                ecma_concat_ecma_strings
+                0x00000000000000a0                ecma_string_trim
                 0x000000000000009c                ecma_substring_copy_to_cesu8_buffer
                 0x000000000000009a                ecma_new_ecma_string_from_number
                 0x0000000000000076                ecma_string_substr
                 0x000000000000006e                ecma_string_copy_to_utf8_buffer
                 0x000000000000006a                ecma_string_compare_to_property_name
-                0x0000000000000060                ecma_string_get_utf8_length
-                0x0000000000000060                ecma_string_get_utf8_size
                 0x0000000000000054                ecma_string_to_number
-                0x0000000000000052                ecma_string_get_length
+                0x0000000000000052                ecma_string_get_utf8_length
+                0x0000000000000052                ecma_string_get_utf8_size
                 0x000000000000004c                ecma_compare_ecma_strings
-                0x0000000000000044                ecma_deref_ecma_string
+                0x0000000000000048                ecma_string_get_length
                 0x0000000000000040                ecma_string_get_char_at_pos
                 0x000000000000003e                ecma_compare_ecma_non_direct_strings
                 0x000000000000003c                ecma_string_copy_to_cesu8_buffer
                 0x000000000000003c                ecma_string_get_property_index
-                0x0000000000000038                ecma_string_get_size
+                0x000000000000003a                ecma_deref_ecma_string
                 0x0000000000000030                ecma_append_magic_string_to_string
+                0x000000000000002e                ecma_string_get_size
                 0x0000000000000028                ecma_string_to_property_name
                 0x0000000000000026                ecma_string_from_property_name
                 0x0000000000000024                ecma_new_ecma_string_from_magic_string_ex_id
@@ -177,7 +156,7 @@
                 0x0000000000000008                ecma_get_ecma_string_from_uint32
                 0x0000000000000008                ecma_get_magic_string
                 0x0000000000000004                ecma_string_to_utf8_bytes
- .text          0x00000000000120a8      0xde8 ../lib/libjerry-core.a(ecma-helpers-conversion.c.o)
+ .text          0x0000000000012268      0xde8 ../lib/libjerry-core.a(ecma-helpers-conversion.c.o)
                 0x0000000000000a36                ecma_utf8_string_to_number
                 0x0000000000000188                ecma_number_to_binary_floating_point_number
                 0x0000000000000150                ecma_number_to_utf8_string
@@ -185,9 +164,7 @@
                 0x0000000000000042                ecma_uint32_to_utf8_string
                 0x0000000000000004                ecma_number_to_int32
                 0x0000000000000004                ecma_number_to_decimal
- .text          0x0000000000020e48      0xd00 ../lib/libjerry-core.a(js-parser-expr.c.o)
-                0x0000000000000b0c                parser_parse_expression
- .text          0x00000000000171d8      0xb82 ../lib/libjerry-core.a(ecma-objects.c.o)
+ .text          0x00000000000174d0      0xb82 ../lib/libjerry-core.a(ecma-objects.c.o)
                 0x00000000000003e8                ecma_op_object_get_property_names
                 0x00000000000001e4                ecma_op_object_put
                 0x000000000000017e                ecma_op_object_get_own_property
@@ -207,9 +184,9 @@
                 0x0000000000000014                ecma_op_object_is_prototype_of
                 0x0000000000000012                ecma_op_object_has_property
                 0x0000000000000004                ecma_op_object_default_value
- .text          0x000000000001d4e0      0x8f8 ../lib/libjerry-core.a(ecma-builtin-global.c.o)
+ .text          0x000000000001c3e8      0x8f8 ../lib/libjerry-core.a(ecma-builtin-global.c.o)
                 0x000000000000050a                ecma_builtin_global_dispatch_routine
- .text          0x0000000000012e90      0x824 ../lib/libjerry-core.a(ecma-helpers.c.o)
+ .text          0x0000000000013208      0x824 ../lib/libjerry-core.a(ecma-helpers.c.o)
                 0x0000000000000138                ecma_delete_array_properties
                 0x00000000000000f6                ecma_find_named_property
                 0x00000000000000d0                ecma_delete_property
@@ -256,7 +233,7 @@
                 0x0000000000000006                ecma_is_property_enumerable
                 0x0000000000000006                ecma_is_property_configurable
                 0x0000000000000004                ecma_get_object_prototype
- .text          0x0000000000017fcc      0x780 ../lib/libjerry-core.a(ecma-conversion.c.o)
+ .text          0x0000000000018290      0x780 ../lib/libjerry-core.a(ecma-conversion.c.o)
                 0x000000000000021e                ecma_op_to_property_descriptor
                 0x000000000000016c                ecma_op_same_value
                 0x00000000000000de                ecma_op_from_property_descriptor
@@ -267,28 +244,28 @@
                 0x000000000000005e                ecma_op_to_object
                 0x000000000000002c                ecma_op_to_primitive
                 0x0000000000000026                ecma_op_check_object_coercible
- .rodata        0x00000000000248a0      0x6c0 ../lib/libjerry-core.a(lit-char-helpers.c.o)
- .text          0x00000000000189ec      0x61c ../lib/libjerry-core.a(ecma-function-object.c.o)
-                0x0000000000000208                ecma_op_function_call
+ .rodata        0x000000000001f520      0x6c0 ../lib/libjerry-core.a(lit-char-helpers.c.o)
+ .text          0x0000000000018cb0      0x64c ../lib/libjerry-core.a(ecma-function-object.c.o)
+                0x0000000000000210                ecma_op_function_call
                 0x00000000000000b6                ecma_op_function_construct
                 0x00000000000000a6                ecma_op_bound_function_try_to_lazy_instantiate_property
-                0x0000000000000098                ecma_op_function_try_to_lazy_instantiate_property
+                0x000000000000009c                ecma_op_function_try_to_lazy_instantiate_property
                 0x000000000000007c                ecma_op_function_has_instance
-                0x000000000000005a                ecma_op_function_list_lazy_property_names
+                0x000000000000005e                ecma_op_function_list_lazy_property_names
                 0x0000000000000048                ecma_is_constructor
+                0x0000000000000044                ecma_op_create_function_object
                 0x000000000000003e                ecma_op_bound_function_list_lazy_property_names
-                0x000000000000002c                ecma_op_create_function_object
                 0x0000000000000026                ecma_op_is_callable
                 0x0000000000000026                ecma_op_external_function_try_to_lazy_instantiate_property
                 0x0000000000000022                ecma_op_create_external_function_object
                 0x000000000000001e                ecma_op_external_function_list_lazy_property_names
+                0x000000000000000c                ecma_op_function_get_compiled_code
                 0x0000000000000008                ecma_is_normal_or_arrow_function
-                0x0000000000000004                ecma_op_function_get_compiled_code
- .text          0x000000000001cd2e      0x60c ../lib/libjerry-core.a(ecma-builtin-object.c.o)
+ .text          0x000000000001bc34      0x60c ../lib/libjerry-core.a(ecma-builtin-object.c.o)
                 0x00000000000003e0                ecma_builtin_object_dispatch_routine
                 0x0000000000000030                ecma_builtin_object_dispatch_call
                 0x000000000000001a                ecma_builtin_object_dispatch_construct
- .text          0x00000000000167e8      0x5a0 ../lib/libjerry-core.a(ecma-builtin-helpers.c.o)
+ .text          0x0000000000016ae0      0x5a0 ../lib/libjerry-core.a(ecma-builtin-helpers.c.o)
                 0x0000000000000124                ecma_builtin_helper_string_find_index
                 0x000000000000010a                ecma_builtin_helper_array_concat_value
                 0x00000000000000b4                ecma_builtin_helper_get_to_locale_string_at_index
@@ -298,7 +275,7 @@
                 0x0000000000000076                ecma_builtin_helper_object_get_properties
                 0x0000000000000058                ecma_builtin_helper_def_prop
                 0x0000000000000046                ecma_builtin_helper_string_index_normalize
- .text          0x00000000000198c0      0x584 ../lib/libjerry-core.a(lit-strings.c.o)
+ .text          0x0000000000019bb4      0x584 ../lib/libjerry-core.a(lit-strings.c.o)
                 0x00000000000000bc                lit_is_valid_utf8_string
                 0x0000000000000076                lit_code_point_to_utf8
                 0x0000000000000072                lit_convert_cesu8_string_to_utf8_string
@@ -326,28 +303,13 @@
                 0x0000000000000010                lit_is_code_point_utf16_low_surrogate
                 0x0000000000000010                lit_is_code_point_utf16_high_surrogate
                 0x0000000000000004                lit_zt_utf8_string_size
- .text          0x0000000000022264      0x57c ../lib/libjerry-core.a(js-parser-util.c.o)
-                0x0000000000000144                parser_emit_cbc_backward_branch
-                0x000000000000013c                parser_flush_cbc
-                0x00000000000000d0                parser_emit_cbc_forward_branch
-                0x0000000000000094                parser_emit_cbc_push_number
-                0x0000000000000052                parser_set_branch_to_current_position
-                0x000000000000002e                parser_emit_cbc_literal_from_token
-                0x0000000000000028                parser_emit_cbc_literal
-                0x0000000000000028                parser_emit_cbc_forward_branch_item
-                0x0000000000000026                parser_set_breaks_to_current_position
-                0x000000000000001c                parser_emit_cbc_call
-                0x000000000000001c                parser_set_continues_to_current_position
-                0x0000000000000016                parser_emit_cbc
- .text          0x00000000000227e0      0x50c ../lib/libjerry-core.a(js-parser-scanner.c.o)
-                0x000000000000050c                parser_scan_until
- .text          0x0000000000014fa0      0x4ec ../lib/libjerry-core.a(ecma-gc.c.o)
-                0x00000000000002f0                ecma_gc_run
-                0x0000000000000054                ecma_free_unused_memory
+ .text          0x0000000000015294      0x4f0 ../lib/libjerry-core.a(ecma-gc.c.o)
+                0x00000000000002f6                ecma_gc_run
+                0x0000000000000052                ecma_free_unused_memory
                 0x000000000000002e                ecma_init_gc_info
                 0x0000000000000018                ecma_ref_object
                 0x0000000000000008                ecma_deref_object
- .text          0x0000000000015ea8      0x49c ../lib/libjerry-core.a(ecma-builtins.c.o)
+ .text          0x00000000000161a0      0x49c ../lib/libjerry-core.a(ecma-builtins.c.o)
                 0x00000000000001a0                ecma_builtin_try_to_instantiate_property
                 0x00000000000000b8                ecma_builtin_list_lazy_property_names
                 0x0000000000000098                ecma_builtin_get
@@ -356,11 +318,11 @@
                 0x0000000000000020                ecma_builtin_dispatch_construct
                 0x0000000000000018                ecma_builtin_is
                 0x000000000000000c                ecma_builtin_function_is_routine
- .text          0x00000000000234c8      0x47c ../lib/libjerry-libc.a(jerry-libc-printf.c.o)
+ .text          0x000000000001e0f8      0x47c ../lib/libjerry-libc.a(jerry-libc-printf.c.o)
                 0x0000000000000244                vfprintf
                 0x0000000000000024                printf
                 0x000000000000001c                fprintf
- .text          0x0000000000015a78      0x42e ../lib/libjerry-core.a(ecma-helpers-value.c.o)
+ .text          0x0000000000015d70      0x42e ../lib/libjerry-core.a(ecma-helpers-value.c.o)
                 0x000000000000008c                ecma_value_assign_number
                 0x000000000000005a                ecma_make_number_value
                 0x0000000000000050                ecma_update_float_number
@@ -411,42 +373,15 @@
                 0x0000000000000004                ecma_get_integer_from_value
                 0x0000000000000002                ecma_check_value_type_is_spec_defined
  *fill*         0x0000000000000002        0x2 
- .text          0x00000000000155d0      0x420 ../lib/libjerry-core.a(ecma-helpers-errol.c.o)
+ .text          0x00000000000158c8      0x420 ../lib/libjerry-core.a(ecma-helpers-errol.c.o)
                 0x00000000000003c8                ecma_errol0_dtoa
- .text          0x0000000000020a26      0x420 ../lib/libjerry-core.a(js-parser-mem.c.o)
-                0x0000000000000082                parser_stack_pop
-                0x0000000000000070                parser_stack_push
-                0x000000000000004e                parser_stack_push_uint8
-                0x0000000000000046                parser_stack_push_uint16
-                0x0000000000000044                parser_stack_pop_uint8
-                0x0000000000000042                parser_stack_pop_uint16
-                0x000000000000003a                parser_list_append
-                0x0000000000000038                parser_list_iterator_next
-                0x0000000000000036                parser_stack_iterator_read
-                0x0000000000000036                parser_stack_iterator_write
-                0x0000000000000028                parser_stack_free
-                0x000000000000001e                parser_cbc_stream_alloc_page
-                0x000000000000001c                parser_list_init
-                0x000000000000001a                parser_malloc
-                0x000000000000001a                parser_malloc_local
-                0x000000000000001a                parser_stack_iterator_skip
-                0x0000000000000018                parser_list_free
-                0x0000000000000018                parser_list_get
-                0x0000000000000016                parser_stack_init
-                0x0000000000000014                parser_cbc_stream_free
-                0x000000000000000c                parser_cbc_stream_init
-                0x000000000000000c                parser_list_reset
-                0x000000000000000c                parser_list_iterator_init
-                0x0000000000000004                parser_free
-                0x0000000000000004                parser_free_local
- *fill*         0x0000000000000002        0x2 
- .text          0x0000000000013a7c      0x3cc ../lib/libjerry-core.a(ecma-property-hashmap.c.o)
+ .text          0x0000000000013df4      0x3cc ../lib/libjerry-core.a(ecma-property-hashmap.c.o)
                 0x0000000000000160                ecma_property_hashmap_create
                 0x00000000000000ec                ecma_property_hashmap_find
                 0x00000000000000b4                ecma_property_hashmap_insert
                 0x00000000000000ac                ecma_property_hashmap_delete
                 0x0000000000000020                ecma_property_hashmap_free
- .text          0x0000000000013700      0x37c ../lib/libjerry-core.a(ecma-helpers-number.c.o)
+ .text          0x0000000000013a78      0x37c ../lib/libjerry-core.a(ecma-helpers-number.c.o)
                 0x00000000000000cc                ecma_number_make_from_sign_mantissa_and_exponent
                 0x0000000000000070                ecma_number_get_fraction_and_exponent
                 0x000000000000006e                ecma_number_trunc
@@ -468,7 +403,7 @@
                 0x0000000000000030                cli_consume_string
                 0x0000000000000010                cli_init
                 0x0000000000000004                cli_change_opts
- .text          0x0000000000016d88      0x362 ../lib/libjerry-core.a(ecma-objects-general.c.o)
+ .text          0x0000000000017080      0x362 ../lib/libjerry-core.a(ecma-objects-general.c.o)
                 0x0000000000000228                ecma_op_general_object_define_own_property
                 0x0000000000000098                ecma_op_general_object_default_value
                 0x000000000000003e                ecma_op_create_object_object_arg
@@ -478,7 +413,7 @@
                 0x0000000000000008                ecma_op_create_object_object_noarg_and_set_prototype
  *fill*         0x0000000000000002        0x2 
  .text          0x0000000000010738      0x338 CMakeFiles/jerry.dir/main-unix.c.o
- .text          0x0000000000019380      0x310 ../lib/libjerry-core.a(lit-char-helpers.c.o)
+ .text          0x0000000000019674      0x310 ../lib/libjerry-core.a(lit-char-helpers.c.o)
                 0x000000000000005e                lit_char_is_identifier_part_character
                 0x000000000000004c                lit_read_code_unit_from_hex
                 0x000000000000004a                lit_char_is_white_space
@@ -496,30 +431,37 @@
                 0x0000000000000010                lit_char_to_upper_case
                 0x000000000000000c                lit_char_is_octal_digit
                 0x000000000000000c                lit_char_is_decimal_digit
- .text          0x0000000000023db8      0x2b0 /usr/lib/gcc-cross/arm-linux-gnueabihf/5/libgcc.a(_divsi3.o)
+ .text          0x000000000001e9e8      0x2b0 /usr/lib/gcc-cross/arm-linux-gnueabihf/5/libgcc.a(_divsi3.o)
                 0x0000000000000294                __divsi3
                 0x000000000000001c                __aeabi_idivmod
                 0x0000000000000000                __aeabi_idiv
- .text          0x000000000001df86      0x2ae ../lib/libjerry-core.a(ecma-comparison.c.o)
+ .text          0x000000000001ce8e      0x2ae ../lib/libjerry-core.a(ecma-comparison.c.o)
                 0x000000000000013a                ecma_op_abstract_equality_compare
                 0x00000000000000ca                ecma_op_abstract_relational_compare
                 0x00000000000000aa                ecma_op_strict_equality_compare
- .text          0x000000000001874c      0x29e ../lib/libjerry-core.a(ecma-array-object.c.o)
+ .text          0x0000000000018a10      0x29e ../lib/libjerry-core.a(ecma-array-object.c.o)
                 0x00000000000000fc                ecma_op_array_object_set_length
                 0x00000000000000c8                ecma_op_create_array_object
                 0x00000000000000bc                ecma_op_array_object_define_own_property
                 0x000000000000001e                ecma_op_array_list_lazy_property_names
  *fill*         0x0000000000000002        0x2 
- .text          0x0000000000023b40      0x278 /usr/lib/gcc-cross/arm-linux-gnueabihf/5/libgcc.a(_udivsi3.o)
+ .text          0x000000000001e770      0x278 /usr/lib/gcc-cross/arm-linux-gnueabihf/5/libgcc.a(_udivsi3.o)
                 0x000000000000025c                __aeabi_uidiv
                 0x000000000000001c                __aeabi_uidivmod
                 0x0000000000000000                __udivsi3
- .rodata        0x00000000000253ea      0x270 ../lib/libjerry-core.a(vm.c.o)
- .text          0x0000000000019008      0x26a ../lib/libjerry-core.a(ecma-objects-arguments.c.o)
+ .rodata        0x000000000002006a      0x270 ../lib/libjerry-core.a(vm.c.o)
+ .text          0x00000000000192fc      0x26a ../lib/libjerry-core.a(ecma-objects-arguments.c.o)
                 0x00000000000001b6                ecma_op_create_arguments_object
                 0x0000000000000070                ecma_op_arguments_object_define_own_property
                 0x0000000000000044                ecma_op_arguments_object_delete
- .text          0x0000000000019690      0x230 ../lib/libjerry-core.a(lit-magic-strings.c.o)
+ .text          0x0000000000010de0      0x258 ../lib/libjerry-core.a(jerry-snapshot.c.o)
+                0x0000000000000010                jerry_load_function_snapshot
+                0x000000000000000e                jerry_exec_snapshot
+                0x000000000000000e                jerry_merge_snapshots
+                0x0000000000000004                jerry_generate_snapshot
+                0x0000000000000004                jerry_parse_and_save_literals
+                0x0000000000000004                jerry_generate_function_snapshot
+ .text          0x0000000000019984      0x230 ../lib/libjerry-core.a(lit-magic-strings.c.o)
                 0x0000000000000078                lit_is_ex_utf8_string_pair_magic
                 0x000000000000006c                lit_is_utf8_string_pair_magic
                 0x0000000000000060                lit_is_ex_utf8_string_magic
@@ -532,13 +474,13 @@
                 0x0000000000000010                lit_magic_strings_ex_set
                 0x000000000000000c                lit_get_magic_string_ex_count
                 0x000000000000000c                lit_get_magic_string_utf8
- .text          0x00000000000165e8      0x200 ../lib/libjerry-core.a(ecma-builtin-function-prototype.c.o)
+ .text          0x00000000000168e0      0x200 ../lib/libjerry-core.a(ecma-builtin-function-prototype.c.o)
                 0x00000000000001f6                ecma_builtin_function_prototype_dispatch_routine
                 0x0000000000000006                ecma_builtin_function_prototype_dispatch_construct
                 0x0000000000000004                ecma_builtin_function_prototype_dispatch_call
- .text          0x0000000000023020      0x1fc ../lib/libjerry-libm.a(fmod.c.o)
+ .text          0x000000000001dc50      0x1fc ../lib/libjerry-libm.a(fmod.c.o)
                 0x00000000000001fc                fmod
- .text          0x0000000000017dd4      0x1f8 ../lib/libjerry-core.a(ecma-lex-env.c.o)
+ .text          0x0000000000018098      0x1f8 ../lib/libjerry-core.a(ecma-lex-env.c.o)
                 0x0000000000000058                ecma_op_set_mutable_binding
                 0x0000000000000052                ecma_op_create_mutable_binding
                 0x000000000000004a                ecma_op_delete_binding
@@ -549,9 +491,8 @@
                 0x0000000000000018                ecma_op_create_immutable_binding
                 0x0000000000000014                ecma_finalize_global_lex_env
                 0x000000000000000c                ecma_get_global_environment
- .rodata        0x0000000000024f60      0x1f4 ../lib/libjerry-core.a(lit-magic-strings.c.o)
- .rodata        0x00000000000258a4      0x1e4 ../lib/libjerry-core.a(js-lexer.c.o)
- .text          0x0000000000021dd0      0x1d0 ../lib/libjerry-core.a(opcodes.c.o)
+ .rodata        0x000000000001fbe0      0x1f4 ../lib/libjerry-core.a(lit-magic-strings.c.o)
+ .text          0x000000000001d488      0x1d0 ../lib/libjerry-core.a(opcodes.c.o)
                 0x00000000000000a0                opfunc_set_accessor
                 0x0000000000000068                opfunc_for_in
                 0x0000000000000060                vm_op_delete_prop
@@ -559,7 +500,7 @@
                 0x0000000000000022                vm_op_delete_var
                 0x0000000000000014                opfunc_logical_not
                 0x000000000000000e                opfunc_typeof
- .text          0x0000000000023300      0x1c8 ../lib/libjerry-libc.a(jerry-libc.c.o)
+ .text          0x000000000001df30      0x1c8 ../lib/libjerry-libc.a(jerry-libc.c.o)
                 0x0000000000000078                strtol
                 0x0000000000000040                memcpy
                 0x0000000000000034                memmove
@@ -571,19 +512,20 @@
                 0x0000000000000014                strncpy
                 0x0000000000000010                memset
                 0x0000000000000010                strlen
- .text          0x0000000000021b48      0x1b6 ../lib/libjerry-core.a(vm-stack.c.o)
+ .text          0x0000000000013050      0x1b8 ../lib/libjerry-core.a(ecma-literal-storage.c.o)
+                0x00000000000000ac                ecma_find_or_create_literal_number
+                0x0000000000000090                ecma_find_or_create_literal_string
+                0x0000000000000030                ecma_snapshot_get_literal
+                0x0000000000000018                ecma_finalize_lit_storage
+ .text          0x000000000001d200      0x1b6 ../lib/libjerry-core.a(vm-stack.c.o)
                 0x00000000000000fa                vm_stack_find_finally
                 0x00000000000000a0                vm_stack_context_abort
  *fill*         0x0000000000000002        0x2 
- .text          0x0000000000022038      0x1a8 ../lib/libjerry-core.a(opcodes-ecma-arithmetics.c.o)
+ .text          0x000000000001d6f0      0x1a8 ../lib/libjerry-core.a(opcodes-ecma-arithmetics.c.o)
                 0x00000000000000f6                opfunc_addition
                 0x0000000000000088                do_number_arithmetic
                 0x000000000000002a                opfunc_unary_operation
- .text          0x000000000001cb98      0x188 ../lib/libjerry-core.a(ecma-literal-storage.c.o)
-                0x00000000000000ac                ecma_find_or_create_literal_number
-                0x0000000000000090                ecma_find_or_create_literal_string
-                0x0000000000000018                ecma_finalize_lit_storage
- .text          0x0000000000023944      0x164 ../lib/libjerry-libc.a(jerry-libc-target.c.o)
+ .text          0x000000000001e574      0x164 ../lib/libjerry-libc.a(jerry-libc-target.c.o)
                 0x0000000000000052                fopen
                 0x000000000000003c                fread
                 0x0000000000000038                exit
@@ -592,34 +534,25 @@
                 0x0000000000000018                raise
                 0x0000000000000010                fclose
                 0x000000000000000a                gettimeofday
- .text          0x0000000000016492      0x156 ../lib/libjerry-core.a(ecma-builtin-error-prototype.c.o)
+ .text          0x000000000001678a      0x156 ../lib/libjerry-core.a(ecma-builtin-error-prototype.c.o)
                 0x0000000000000156                ecma_builtin_error_prototype_dispatch_routine
- .text          0x000000000001d346      0x150 ../lib/libjerry-core.a(ecma-builtin-function.c.o)
+ .text          0x000000000001c24c      0x150 ../lib/libjerry-core.a(ecma-builtin-function.c.o)
                 0x000000000000014c                ecma_builtin_function_dispatch_construct
                 0x0000000000000004                ecma_builtin_function_dispatch_call
                 0x0000000000000000                ecma_builtin_function_dispatch_routine
- .text          0x0000000000016344      0x14e ../lib/libjerry-core.a(ecma-builtin-object-prototype.c.o)
+ .text          0x000000000001663c      0x14e ../lib/libjerry-core.a(ecma-builtin-object-prototype.c.o)
                 0x000000000000014e                ecma_builtin_object_prototype_dispatch_routine
- .text          0x000000000001548c      0x13e ../lib/libjerry-core.a(ecma-helpers-values-collection.c.o)
+ .text          0x0000000000015784      0x13e ../lib/libjerry-core.a(ecma-helpers-values-collection.c.o)
                 0x0000000000000098                ecma_append_to_values_collection
                 0x0000000000000066                ecma_free_values_collection
                 0x000000000000001a                ecma_collection_iterator_next
                 0x0000000000000014                ecma_collection_iterator_init
                 0x0000000000000012                ecma_new_values_collection
  *fill*         0x0000000000000006        0x6 
- .rodata        0x000000000002576a      0x138 ../lib/libjerry-core.a(byte-code.c.o)
-                0x00000000000000ed                cbc_flags
-                0x000000000000004b                cbc_ext_flags
- *fill*         0x0000000000000002        0x2 
- .text          0x000000000001ca64      0x134 ../lib/libjerry-core.a(ecma-lcache.c.o)
-                0x0000000000000074                ecma_lcache_lookup
-                0x0000000000000070                ecma_lcache_insert
-                0x0000000000000040                ecma_lcache_invalidate
-                0x0000000000000010                ecma_lcache_init
- .rodata        0x0000000000024098      0x12c CMakeFiles/jerry.dir/main-unix.c.o
- .text          0x0000000000022f18       0xf0 ../lib/libjerry-libm.a(floor.c.o)
+ .rodata        0x000000000001ecc8      0x12c CMakeFiles/jerry.dir/main-unix.c.o
+ .text          0x000000000001db48       0xf0 ../lib/libjerry-libm.a(floor.c.o)
                 0x00000000000000f0                floor
- .text          0x00000000000170ec       0xec ../lib/libjerry-core.a(ecma-exceptions.c.o)
+ .text          0x00000000000173e4       0xec ../lib/libjerry-core.a(ecma-exceptions.c.o)
                 0x000000000000004c                ecma_raise_standard_error
                 0x0000000000000030                ecma_new_standard_error_with_message
                 0x0000000000000022                ecma_new_standard_error
@@ -631,29 +564,29 @@
                 0x0000000000000008                ecma_raise_syntax_error
                 0x0000000000000008                ecma_raise_type_error
                 0x0000000000000008                ecma_raise_uri_error
- .text          0x000000000002321c       0xe4 ../lib/libjerry-libm.a(nextafter.c.o)
+ .text          0x000000000001de4c       0xe4 ../lib/libjerry-libm.a(nextafter.c.o)
                 0x00000000000000e4                nextafter
- .text          0x0000000000021d00       0xd0 ../lib/libjerry-core.a(opcodes-ecma-bitwise.c.o)
+ .text          0x000000000001d3b8       0xd0 ../lib/libjerry-core.a(opcodes-ecma-bitwise.c.o)
                 0x00000000000000d0                do_number_bitwise_logic
- .text          0x000000000001e234       0xbe ../lib/libjerry-core.a(ecma-reference.c.o)
+ .text          0x000000000001d13c       0xbe ../lib/libjerry-core.a(ecma-reference.c.o)
                 0x000000000000009e                ecma_op_resolve_reference_value
                 0x0000000000000020                ecma_op_resolve_reference_base
- .rodata        0x0000000000024768       0xb8 ../lib/libjerry-core.a(ecma-builtins.c.o)
- .text          0x000000000001dede       0xa8 ../lib/libjerry-core.a(ecma-get-put-value.c.o)
+ .rodata        0x000000000001f3e8       0xb8 ../lib/libjerry-core.a(ecma-builtins.c.o)
+ .text          0x000000000001cde6       0xa8 ../lib/libjerry-core.a(ecma-get-put-value.c.o)
                 0x000000000000005e                ecma_op_get_value_object_base
                 0x0000000000000040                ecma_op_put_value_lex_env_base
                 0x000000000000000a                ecma_op_get_value_lex_env_base
- .text          0x0000000000022d2c       0xa4 ../lib/libjerry-ext.a(handler-print.c.o)
+ .text          0x000000000001d958       0xa4 ../lib/libjerry-ext.a(handler-print.c.o)
                 0x00000000000000a4                jerryx_handler_print
- .text          0x000000000001de44       0x9a ../lib/libjerry-core.a(ecma-string-object.c.o)
+ .text          0x000000000001cd4c       0x9a ../lib/libjerry-core.a(ecma-string-object.c.o)
                 0x0000000000000054                ecma_op_string_list_lazy_property_names
                 0x0000000000000046                ecma_op_create_string_object
- .text          0x0000000000021fa0       0x98 ../lib/libjerry-core.a(opcodes-ecma-relational-equality.c.o)
+ .text          0x000000000001d658       0x98 ../lib/libjerry-core.a(opcodes-ecma-relational-equality.c.o)
                 0x0000000000000048                opfunc_in
                 0x0000000000000026                opfunc_relation
                 0x0000000000000026                opfunc_instanceof
                 0x0000000000000004                opfunc_equality
- .text          0x0000000000023aa8       0x98 ../lib/libjerry-libc.a(jerry-asm.S.o)
+ .text          0x000000000001e6d8       0x98 ../lib/libjerry-libc.a(jerry-asm.S.o)
                 0x000000000000001c                syscall_3
                 0x000000000000001c                longjmp
                 0x0000000000000018                syscall_2
@@ -661,29 +594,24 @@
                 0x0000000000000014                syscall_1
                 0x0000000000000010                syscall_0
                 0x0000000000000010                setjmp
- .text          0x00000000000159f0       0x88 ../lib/libjerry-core.a(ecma-helpers-external-pointers.c.o)
+ .text          0x0000000000015ce8       0x88 ../lib/libjerry-core.a(ecma-helpers-external-pointers.c.o)
                 0x000000000000001e                ecma_get_native_pointer_value
                 0x000000000000000e                ecma_free_native_pointer
                 0x0000000000000008                ecma_create_native_handle_property
                 0x0000000000000008                ecma_create_native_pointer_property
- .text          0x0000000000019274       0x84 ../lib/libjerry-core.a(jmem-heap.c.o)
+ .text          0x0000000000019568       0x84 ../lib/libjerry-core.a(jmem-heap.c.o)
                 0x0000000000000030                jmem_heap_init
                 0x0000000000000004                jmem_heap_finalize
- .text          0x00000000000221e0       0x82 ../lib/libjerry-core.a(ecma-number-arithmetic.c.o)
+ .text          0x000000000001d898       0x82 ../lib/libjerry-core.a(ecma-number-arithmetic.c.o)
                 0x0000000000000082                ecma_op_number_remainder
- *fill*         0x0000000000000002        0x2 
- .rodata        0x00000000000256ea       0x80 ../lib/libjerry-core.a(ecma-builtin-global.c.o)
+ .rodata        0x000000000002036a       0x80 ../lib/libjerry-core.a(ecma-builtin-global.c.o)
                 0x0000000000000060                ecma_builtin_global_property_descriptor_list
- .text          0x0000000000017d5a       0x78 ../lib/libjerry-core.a(ecma-eval.c.o)
-                0x0000000000000048                ecma_op_eval
-                0x0000000000000030                ecma_op_eval_chars_buffer
- *fill*         0x0000000000000002        0x2 
- .text          0x0000000000022e90       0x78 ../lib/libjerry-port-default.a(default-date.c.o)
+ .text          0x000000000001dac0       0x78 ../lib/libjerry-port-default.a(default-date.c.o)
                 0x0000000000000048                jerry_port_get_current_time
                 0x0000000000000030                jerry_port_get_time_zone
- .rodata        0x000000000002566c       0x60 ../lib/libjerry-core.a(ecma-builtin-object.c.o)
+ .rodata        0x00000000000202ec       0x60 ../lib/libjerry-core.a(ecma-builtin-object.c.o)
                 0x0000000000000060                ecma_builtin_object_property_descriptor_list
- .text          0x00000000000192f8       0x5c ../lib/libjerry-core.a(jmem-allocator.c.o)
+ .text          0x00000000000195ec       0x5c ../lib/libjerry-core.a(jmem-allocator.c.o)
                 0x0000000000000018                jmem_run_free_unused_memory_callbacks
                 0x000000000000000e                jmem_finalize
                 0x000000000000000e                jmem_compress_pointer
@@ -691,10 +619,10 @@
                 0x000000000000000c                jmem_register_free_unused_memory_callback
                 0x000000000000000c                jmem_unregister_free_unused_memory_callback
                 0x0000000000000004                jmem_init
- .text          0x0000000000013e48       0x50 ../lib/libjerry-core.a(ecma-init-finalize.c.o)
+ .text          0x00000000000141c0       0x50 ../lib/libjerry-core.a(ecma-init-finalize.c.o)
                 0x000000000000002c                ecma_init
                 0x0000000000000024                ecma_finalize
- .text          0x00000000000136b4       0x4c ../lib/libjerry-core.a(ecma-alloc.c.o)
+ .text          0x0000000000013a2c       0x4c ../lib/libjerry-core.a(ecma-alloc.c.o)
                 0x0000000000000006                ecma_alloc_number
                 0x0000000000000006                ecma_dealloc_number
                 0x0000000000000006                ecma_alloc_object
@@ -709,99 +637,97 @@
                 0x0000000000000004                ecma_dealloc_extended_object
                 0x0000000000000004                ecma_alloc_string_buffer
                 0x0000000000000004                ecma_dealloc_string_buffer
- .text          0x000000000001d496       0x48 ../lib/libjerry-core.a(ecma-builtin-helpers-error.c.o)
+ .text          0x000000000001c39c       0x48 ../lib/libjerry-core.a(ecma-builtin-helpers-error.c.o)
                 0x0000000000000048                ecma_builtin_helper_error_dispatch_call
+ *fill*         0x0000000000000004        0x4 
+ .text          0x0000000000018052       0x44 ../lib/libjerry-core.a(ecma-eval.c.o)
+                0x000000000000003e                ecma_op_eval
+                0x0000000000000006                ecma_op_eval_chars_buffer
  *fill*         0x0000000000000002        0x2 
- .text          0x0000000000022e18       0x44 ../lib/libjerry-port-default.a(default-io.c.o)
+ .text          0x000000000001da44       0x44 ../lib/libjerry-port-default.a(default-io.c.o)
                 0x000000000000002c                jerry_port_log
                 0x000000000000000c                jerry_port_default_get_log_level
                 0x000000000000000c                jerry_port_default_set_log_level
- .text          0x0000000000022cec       0x3e ../lib/libjerry-ext.a(handler-register.c.o)
+ .text          0x000000000001d91a       0x3e ../lib/libjerry-ext.a(handler-register.c.o)
                 0x000000000000003e                jerryx_handler_register_global
- *fill*         0x0000000000000002        0x2 
- .text          0x0000000000022de0       0x38 ../lib/libjerry-ext.a(handler-assert.c.o)
+ .text          0x000000000001da0c       0x38 ../lib/libjerry-ext.a(handler-assert.c.o)
                 0x0000000000000038                jerryx_handler_assert
- .text          0x000000000001ddd8       0x36 ../lib/libjerry-core.a(ecma-number-object.c.o)
+ .text          0x000000000001cce0       0x36 ../lib/libjerry-core.a(ecma-number-object.c.o)
                 0x0000000000000036                ecma_op_create_number_object
- .text          0x000000000001de0e       0x36 ../lib/libjerry-core.a(ecma-boolean-object.c.o)
+ .text          0x000000000001cd16       0x36 ../lib/libjerry-core.a(ecma-boolean-object.c.o)
                 0x0000000000000036                ecma_op_create_boolean_object
- .text          0x0000000000022e5c       0x34 ../lib/libjerry-port-default.a(default-fatal.c.o)
+ .text          0x000000000001da88       0x34 ../lib/libjerry-port-default.a(default-fatal.c.o)
                 0x000000000000001c                jerry_port_fatal
                 0x000000000000000c                jerry_port_default_set_abort_on_fail
                 0x000000000000000c                jerry_port_default_is_abort_on_fail
- .text          0x000000000001afa8       0x30 ../lib/libjerry-core.a(vm-utils.c.o)
+ *fill*         0x0000000000000004        0x4 
+ .text          0x000000000001a138       0x30 ../lib/libjerry-core.a(vm-utils.c.o)
                 0x0000000000000014                vm_is_strict_mode
                 0x0000000000000010                vm_is_direct_eval_form_call
                 0x000000000000000c                vm_get_backtrace
- .rodata        0x0000000000024820       0x30 ../lib/libjerry-core.a(ecma-builtin-object-prototype.c.o)
+ .rodata        0x000000000001f4a0       0x30 ../lib/libjerry-core.a(ecma-builtin-object-prototype.c.o)
                 0x0000000000000030                ecma_builtin_object_prototype_property_descriptor_list
- .rodata        0x000000000002486e       0x2a ../lib/libjerry-core.a(ecma-builtin-function-prototype.c.o)
+ .rodata        0x000000000001f4ee       0x2a ../lib/libjerry-core.a(ecma-builtin-function-prototype.c.o)
                 0x000000000000002a                ecma_builtin_function_prototype_property_descriptor_list
- .text          0x0000000000010de0       0x24 ../lib/libjerry-core.a(jerry-snapshot.c.o)
-                0x0000000000000010                jerry_merge_snapshots
-                0x0000000000000004                jerry_generate_snapshot
-                0x0000000000000004                jerry_exec_snapshot
-                0x0000000000000004                jerry_parse_and_save_literals
-                0x0000000000000004                jerry_generate_function_snapshot
-                0x0000000000000004                jerry_load_function_snapshot
- .text          0x0000000000019354       0x24 ../lib/libjerry-core.a(jmem-poolman.c.o)
+ .text          0x0000000000019648       0x24 ../lib/libjerry-core.a(jmem-poolman.c.o)
                 0x0000000000000020                jmem_pools_collect_empty
                 0x0000000000000004                jmem_pools_finalize
- .rodata        0x0000000000025ba6       0x24 ../lib/libjerry-core.a(js-parser-expr.c.o)
- .text          0x0000000000020a04       0x22 ../lib/libjerry-core.a(common.c.o)
-                0x0000000000000022                util_free_literal
- .rodata        0x0000000000024850       0x1e ../lib/libjerry-core.a(ecma-builtin-error-prototype.c.o)
+ .rodata        0x000000000001f4d0       0x1e ../lib/libjerry-core.a(ecma-builtin-error-prototype.c.o)
                 0x000000000000001e                ecma_builtin_error_prototype_property_descriptor_list
- .text          0x0000000000010e04       0x1a ../lib/libjerry-core.a(jerry-debugger.c.o)
+ .text          0x0000000000011038       0x1a ../lib/libjerry-core.a(jerry-debugger.c.o)
                 0x000000000000000e                jerry_debugger_wait_for_client_source
+ *fill*         0x0000000000000006        0x6 
                 0x0000000000000004                jerry_debugger_is_connected
                 0x0000000000000002                jerry_debugger_stop
                 0x0000000000000002                jerry_debugger_continue
                 0x0000000000000002                jerry_debugger_stop_at_breakpoint
                 0x0000000000000002                jerry_debugger_init
- *fill*         0x0000000000000002        0x2 
- .text          0x0000000000024068       0x18 /usr/lib/gcc-cross/arm-linux-gnueabihf/5/libgcc.a(_ashldi3.o)
+ .text          0x000000000001ec98       0x18 /usr/lib/gcc-cross/arm-linux-gnueabihf/5/libgcc.a(_ashldi3.o)
                 0x0000000000000018                __aeabi_llsl
                 0x0000000000000000                __ashldi3
- .text          0x0000000000023008       0x16 ../lib/libjerry-libm.a(fabs.c.o)
+ .text          0x000000000001dc38       0x16 ../lib/libjerry-libm.a(fabs.c.o)
                 0x0000000000000016                fabs
  *fill*         0x0000000000000002        0x2 
- .rodata        0x000000000002565a       0x12 ../lib/libjerry-core.a(ecma-builtin-error.c.o)
+ .rodata        0x00000000000202da       0x12 ../lib/libjerry-core.a(ecma-builtin-error.c.o)
                 0x0000000000000012                ecma_builtin_error_property_descriptor_list
- .rodata        0x00000000000256d8       0x12 ../lib/libjerry-core.a(ecma-builtin-function.c.o)
+ .rodata        0x0000000000020358       0x12 ../lib/libjerry-core.a(ecma-builtin-function.c.o)
                 0x0000000000000012                ecma_builtin_function_property_descriptor_list
- .rodata        0x0000000000025bf8       0x10 ../lib/libjerry-libm.a(fmod.c.o)
- .text          0x000000000001cd20        0xe ../lib/libjerry-core.a(ecma-builtin-error.c.o)
+ .rodata        0x0000000000020418       0x10 ../lib/libjerry-libm.a(fmod.c.o)
+ .text          0x000000000001bc26        0xe ../lib/libjerry-core.a(ecma-builtin-error.c.o)
                 0x000000000000000a                ecma_builtin_error_dispatch_routine
                 0x0000000000000004                ecma_builtin_error_dispatch_construct
                 0x0000000000000000                ecma_builtin_error_dispatch_call
- .text          0x0000000000022dd0        0xe ../lib/libjerry-ext.a(handler-gc.c.o)
+ .text          0x000000000001d9fc        0xe ../lib/libjerry-ext.a(handler-gc.c.o)
                 0x000000000000000e                jerryx_handler_gc
  *fill*         0x0000000000000002        0x2 
- .text          0x000000000001d33a        0xc ../lib/libjerry-core.a(ecma-builtin-type-error-thrower.c.o)
+ .text          0x000000000001c240        0xc ../lib/libjerry-core.a(ecma-builtin-type-error-thrower.c.o)
                 0x0000000000000006                ecma_builtin_type_error_thrower_dispatch_routine
                 0x0000000000000006                ecma_builtin_type_error_thrower_dispatch_construct
                 0x0000000000000000                ecma_builtin_type_error_thrower_dispatch_call
- .text          0x0000000000022f08        0xc ../lib/libjerry-port-default.a(defaultx-handler.c.o)
+ .text          0x000000000001db38        0xc ../lib/libjerry-port-default.a(defaultx-handler.c.o)
                 0x000000000000000c                jerryx_port_handler_print_char
  *fill*         0x0000000000000004        0x4 
- .text          0x0000000000024080        0xc /usr/lib/gcc-cross/arm-linux-gnueabihf/5/libgcc.a(_dvmd_lnx.o)
+ .text          0x000000000001ecb0        0xc /usr/lib/gcc-cross/arm-linux-gnueabihf/5/libgcc.a(_dvmd_lnx.o)
                 0x000000000000000c                __aeabi_idiv0
  *fill*         0x0000000000000004        0x4 
                 0x0000000000000000                __aeabi_ldiv0
- .rodata        0x00000000000256cc        0xc ../lib/libjerry-core.a(ecma-builtin-type-error-thrower.c.o)
+ .rodata        0x000000000002034c        0xc ../lib/libjerry-core.a(ecma-builtin-type-error-thrower.c.o)
                 0x000000000000000c                ecma_builtin_type_error_thrower_property_descriptor_list
- .rodata        0x0000000000025b8f        0xc ../lib/libjerry-core.a(js-parser-statm.c.o)
- .rodata        0x000000000002475c        0x8 ../lib/libjerry-core.a(ecma-property-hashmap.c.o)
+ .text          0x000000000001bc1c        0xa ../lib/libjerry-core.a(ecma-lcache.c.o)
+                0x0000000000000004                ecma_lcache_lookup
+                0x0000000000000002                ecma_lcache_init
+                0x0000000000000002                ecma_lcache_insert
+                0x0000000000000002                ecma_lcache_invalidate
+ .rodata        0x000000000001f3dc        0x8 ../lib/libjerry-core.a(ecma-property-hashmap.c.o)
  *fill*         0x0000000000000004        0x4 
- .rodata        0x0000000000024898        0x8 ../lib/libjerry-core.a(ecma-exceptions.c.o)
+ .rodata        0x000000000001f518        0x8 ../lib/libjerry-core.a(ecma-exceptions.c.o)
                 0x0000000000000008                ecma_error_mappings
- .text          0x0000000000019378        0x6 ../lib/libjerry-core.a(jrt-fatals.c.o)
+ .text          0x000000000001966c        0x6 ../lib/libjerry-core.a(jrt-fatals.c.o)
                 0x0000000000000006                jerry_fatal
  *fill*         0x0000000000000002        0x2 
- .rodata        0x0000000000024758        0x4 ../lib/libjerry-core.a(ecma-helpers-number.c.o)
+ .text          0x000000000001d1fa        0x6 ../lib/libjerry-core.a(js-parser.c.o)
+                0x0000000000000006                parser_parse_script
+ .rodata        0x000000000001f3d8        0x4 ../lib/libjerry-core.a(ecma-helpers-number.c.o)
                 0x0000000000000004                ecma_number_exponent_bias
- .text          0x0000000000019272        0x0 ../lib/libjerry-core.a(jcontext.c.o)
+ .text          0x0000000000019566        0x0 ../lib/libjerry-core.a(jcontext.c.o)
  *fill*         0x0000000000000002        0x2 
- .text          0x000000000001e2f2        0x0 ../lib/libjerry-core.a(byte-code.c.o)
- *fill*         0x0000000000000006        0x6 
