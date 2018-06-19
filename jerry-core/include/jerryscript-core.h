@@ -514,7 +514,9 @@ jerry_value_t jerry_resolve_or_reject_promise (jerry_value_t promise, jerry_valu
  * Input validator functions.
  */
 bool jerry_is_valid_utf8_string (const jerry_char_t *utf8_buf_p, jerry_size_t buf_size);
+#ifndef JUST_ASCII
 bool jerry_is_valid_cesu8_string (const jerry_char_t *cesu8_buf_p, jerry_size_t buf_size);
+#endif /* JUST_ASCII */
 
 /*
  * External context functions.

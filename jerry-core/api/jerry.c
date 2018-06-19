@@ -2730,6 +2730,7 @@ jerry_is_valid_utf8_string (const jerry_char_t *utf8_buf_p, /**< UTF-8 string */
  * @return true - if CESU-8 string is well-formed
  *         false - otherwise
  */
+#ifndef JUST_ASCII
 bool
 jerry_is_valid_cesu8_string (const jerry_char_t *cesu8_buf_p, /**< CESU-8 string */
                              jerry_size_t buf_size) /**< string size */
@@ -2737,6 +2738,7 @@ jerry_is_valid_cesu8_string (const jerry_char_t *cesu8_buf_p, /**< CESU-8 string
   return lit_is_valid_cesu8_string ((lit_utf8_byte_t *) cesu8_buf_p,
                                     (lit_utf8_size_t) buf_size);
 } /* jerry_is_valid_cesu8_string */
+#endif /* JUST_ASCII */
 
 /**
  * Create a jerry instance for external context.

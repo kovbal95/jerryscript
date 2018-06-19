@@ -187,7 +187,9 @@ ecma_new_ecma_string_from_utf8 (const lit_utf8_byte_t *string_p, /**< utf-8 stri
                                 lit_utf8_size_t string_size) /**< string size */
 {
   JERRY_ASSERT (string_p != NULL || string_size == 0);
+  #ifndef JUST_ASCII
   JERRY_ASSERT (lit_is_valid_cesu8_string (string_p, string_size));
+  #endif /* JUST_ASCII */
 
   lit_magic_string_id_t magic_string_id = lit_is_utf8_string_magic (string_p, string_size);
 
@@ -262,7 +264,6 @@ ecma_new_ecma_string_from_utf8 (const lit_utf8_byte_t *string_p, /**< utf-8 stri
  * @return pointer to ecma-string descriptor
  */
 
- #ifndef OFF_CESU8
 ecma_string_t *
 ecma_new_ecma_string_from_utf8_converted_to_cesu8 (const lit_utf8_byte_t *string_p, /**< utf-8 string */
                                                    lit_utf8_size_t string_size) /**< utf-8 string size */
@@ -278,6 +279,7 @@ ecma_new_ecma_string_from_utf8_converted_to_cesu8 (const lit_utf8_byte_t *string
   /* Calculate the required length and size information of the converted cesu-8 encoded string */
   while (pos < string_size)
   {
+#ifndef JUST_ASCII
     if ((string_p[pos] & LIT_UTF8_1_BYTE_MASK) == LIT_UTF8_1_BYTE_MARKER)
     {
       pos++;
@@ -297,6 +299,9 @@ ecma_new_ecma_string_from_utf8_converted_to_cesu8 (const lit_utf8_byte_t *string
       converted_string_size += 2;
       converted_string_length++;
     }
+#else
+    pos++;
+#endif
 
     converted_string_length++;
   }
@@ -333,7 +338,7 @@ ecma_new_ecma_string_from_utf8_converted_to_cesu8 (const lit_utf8_byte_t *string
 #ifndef OFF_ECMA_STRING_CONTAINER_HEAP_LONG_UTF8_STRING
       string_desc_p->refs_and_container = ECMA_STRING_CONTAINER_HEAP_LONG_UTF8_STRING | ECMA_STRING_REF_ONE;
 #else
-    string_desc_p->refs_and_container = ECMA_STRING_REF_ONE;
+      string_desc_p->refs_and_container = ECMA_STRING_REF_ONE;
 #endif
       string_desc_p->u.common_uint32_field = 0;
       string_desc_p->u.long_utf8_string_size = converted_string_size;
@@ -349,6 +354,7 @@ ecma_new_ecma_string_from_utf8_converted_to_cesu8 (const lit_utf8_byte_t *string
 
     while (pos < string_size)
     {
+#ifndef JUST_ASCII
       if ((string_p[pos] & LIT_UTF8_4_BYTE_MASK) == LIT_UTF8_4_BYTE_MARKER)
       {
         /* Processing 4 byte unicode sequence. Always converted to two 3 byte long sequence. */
@@ -367,6 +373,9 @@ ecma_new_ecma_string_from_utf8_converted_to_cesu8 (const lit_utf8_byte_t *string
       {
         *data_p++ = string_p[pos++];
       }
+#else
+      *data_p++ = string_p[pos++];
+#endif /* JUST_ASCII */
     }
 
     JERRY_ASSERT (pos == string_size);
@@ -376,7 +385,7 @@ ecma_new_ecma_string_from_utf8_converted_to_cesu8 (const lit_utf8_byte_t *string
 
   return string_desc_p;
 } /* ecma_new_ecma_string_from_utf8_converted_to_cesu8 */
-#endif /* OFF_CESU8 */
+
 /**
  * Allocate new ecma-string and fill it with cesu-8 character which represents specified code unit
  *
@@ -606,7 +615,7 @@ ecma_append_chars_to_string (ecma_string_t *string1_p, /**< base ecma-string */
         cesu8_string1_length = long_string_desc_p->long_utf8_string_length;
         break;
       }
-      #endif
+      #endif /* OFF_ECMA_STRING_CONTAINER_HEAP_LONG_UTF8_STRING */
       case ECMA_STRING_CONTAINER_UINT32_IN_DESC:
       {
         cesu8_string1_size = ecma_uint32_to_utf8_string (string1_p->u.uint32_number,
@@ -1130,13 +1139,16 @@ ecma_string_copy_to_utf8_buffer (const ecma_string_t *string_p, /**< ecma-string
   uint8_t flags = ECMA_STRING_FLAG_IS_ASCII;
   const lit_utf8_byte_t *chars_p = ecma_string_get_chars (string_p, &size, &flags);
 
+#ifndef JUST_ASCII
   JERRY_ASSERT (chars_p != NULL);
 
   if (flags & ECMA_STRING_FLAG_IS_ASCII)
   {
+#endif /* JUST_ASCII */
     JERRY_ASSERT (size <= buffer_size);
     memcpy (buffer_p, chars_p, size);
     return size;
+#ifndef JUST_ASCII
   }
 
   size = lit_convert_cesu8_string_to_utf8_string (chars_p,
@@ -1151,6 +1163,7 @@ ecma_string_copy_to_utf8_buffer (const ecma_string_t *string_p, /**< ecma-string
 
   JERRY_ASSERT (size <= buffer_size);
   return size;
+#endif /* JUST_ASCII */
 } /* ecma_string_copy_to_utf8_buffer */
 
 /**
@@ -2007,6 +2020,7 @@ ecma_string_get_ascii_size (const ecma_string_t *string_p) /**< ecma-string */
 ecma_length_t
 ecma_string_get_length (const ecma_string_t *string_p) /**< ecma-string */
 {
+#ifndef JUST_ASCII
   ecma_length_t length = ecma_string_get_ascii_size (string_p);
 
   if (length != ECMA_STRING_NO_ASCII_SIZE)
@@ -2043,6 +2057,9 @@ ecma_string_get_length (const ecma_string_t *string_p) /**< ecma-string */
                                      lit_get_magic_string_ex_size (string_p->u.magic_string_ex_id));
     }
   }
+#else
+  return ecma_string_get_ascii_size (string_p);
+#endif /* JUST_ASCII */
 } /* ecma_string_get_length */
 
 /**
@@ -2109,6 +2126,7 @@ ecma_string_get_utf8_length (const ecma_string_t *string_p) /**< ecma-string */
  *
  * @return number of bytes in the buffer needed to represent the string
  */
+#ifndef JUST_ASCII
 lit_utf8_size_t
 ecma_string_get_size (const ecma_string_t *string_p) /**< ecma-string */
 {
@@ -2147,6 +2165,13 @@ ecma_string_get_size (const ecma_string_t *string_p) /**< ecma-string */
     }
   }
 } /* ecma_string_get_size */
+#else
+lit_utf8_size_t
+ecma_string_get_size (const ecma_string_t *string_p) /**< ecma-string */
+{
+  return ecma_string_get_ascii_size (string_p);
+} /* ecma_string_get_size */
+#endif /* JUST_ASCII */
 
 /**
  * Get the UTF-8 encoded string size from ecma-string

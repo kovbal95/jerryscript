@@ -1299,6 +1299,7 @@ ecma_builtin_json_quote (ecma_string_t *string_p) /**< string that should be quo
 
       product_str_p = ecma_append_chars_to_string (product_str_p, chars, 1, 1);
     }
+    #ifndef JUST_ASCII
     else
     {
       ecma_string_t *current_char_str_p = ecma_new_ecma_string_from_code_unit (current_char);
@@ -1306,6 +1307,7 @@ ecma_builtin_json_quote (ecma_string_t *string_p) /**< string that should be quo
       product_str_p = ecma_concat_ecma_strings (product_str_p, current_char_str_p);
       ecma_deref_ecma_string (current_char_str_p);
     }
+    #endif /* JUST_ASCII */
   }
 
   ECMA_FINALIZE_UTF8_STRING (string_buff, string_buff_size);

@@ -821,8 +821,11 @@ ecma_builtin_global_object_decode_uri_helper (ecma_value_t uri, /**< uri argumen
     if (ecma_is_value_empty (ret_value))
     {
       JERRY_ASSERT (output_start_p + output_size == output_char_p);
-
+#ifndef JUST_ASCII
       if (lit_is_valid_cesu8_string (output_start_p, output_size))
+#else
+      if (lit_is_valid_utf8_string (output_start_p, output_size))
+#endif /* JUST_ASCII */
       {
         ecma_string_t *output_string_p = ecma_new_ecma_string_from_utf8 (output_start_p, output_size);
         ret_value = ecma_make_string_value (output_string_p);

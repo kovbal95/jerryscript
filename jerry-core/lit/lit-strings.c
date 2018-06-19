@@ -42,7 +42,9 @@ lit_is_valid_utf8_string (const lit_utf8_byte_t *utf8_buf_p, /**< utf-8 string *
       is_prev_code_point_high_surrogate = false;
       continue;
     }
-
+    #ifdef JUST_ASCII
+    return false;
+    #endif /* JUST_ASCII */
     lit_code_point_t code_point = 0;
     lit_code_point_t min_code_point = 0;
     lit_utf8_size_t extra_bytes_count;
@@ -124,6 +126,7 @@ lit_is_valid_utf8_string (const lit_utf8_byte_t *utf8_buf_p, /**< utf-8 string *
  * @return true if cesu-8 string is well-formed
  *         false otherwise
  */
+#ifndef JUST_ASCII
 bool
 lit_is_valid_cesu8_string (const lit_utf8_byte_t *cesu8_buf_p, /**< cesu-8 string */
                            lit_utf8_size_t buf_size) /**< string size */
@@ -187,6 +190,7 @@ lit_is_valid_cesu8_string (const lit_utf8_byte_t *cesu8_buf_p, /**< cesu-8 strin
 
   return true;
 } /* lit_is_valid_cesu8_string */
+#endif /* JUST_ASCII */
 
 /**
  * Check if the code point is UTF-16 low surrogate

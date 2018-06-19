@@ -647,11 +647,12 @@ ecma_number_get_prev (ecma_number_t num) /**< ecma-number */
 ecma_number_t
 ecma_number_get_prev (ecma_number_t num) /**< ecma-number */
 {
-  if (num == 0) {
+  if (num == 0)
+  {
     return 0;
   }
   return num-1;
-}
+} /* ecma_number_get_prev */
 #endif /* JUST_INT */
 
 /**
@@ -698,9 +699,12 @@ ecma_number_get_next (ecma_number_t num) /**< ecma-number */
 ecma_number_t
 ecma_number_get_next (ecma_number_t num) /**< ecma-number */
 {
-  if (num == UINT32_MAX) return num;
+  if (num == UINT32_MAX)
+  {
+    return num;
+  }
   return num+1;
-}
+} /* ecma_number_get_next */
 #endif /* JUST_INT */
 
 /**

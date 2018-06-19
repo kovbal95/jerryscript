@@ -2129,8 +2129,11 @@ lexer_construct_regexp_object (parser_context_t *context_p, /**< context */
   ecma_value_t completion_value;
 
   ecma_string_t *pattern_str_p = NULL;
-
+#ifndef JUST_ASCII
   if (lit_is_valid_cesu8_string (regex_start_p, length))
+#else
+  if (lit_is_valid_utf8_string (regex_start_p, length))
+#endif /* JUST_ASCII */
   {
     pattern_str_p = ecma_new_ecma_string_from_utf8 (regex_start_p, length);
   }

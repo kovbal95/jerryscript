@@ -86,7 +86,9 @@
 
 /* validation */
 bool lit_is_valid_utf8_string (const lit_utf8_byte_t *utf8_buf_p, lit_utf8_size_t buf_size);
+#ifndef JUST_ASCII
 bool lit_is_valid_cesu8_string (const lit_utf8_byte_t *cesu8_buf_p, lit_utf8_size_t buf_size);
+#endif /* JUST_ASCII */
 
 /* checks */
 bool lit_is_code_point_utf16_low_surrogate (lit_code_point_t code_point);

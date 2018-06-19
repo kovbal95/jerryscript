@@ -804,9 +804,9 @@ ecma_number_t
 ecma_utf8_string_to_number (const lit_utf8_byte_t *str_p, /**< utf-8 string */
                             lit_utf8_size_t str_size)
 {
-  ecma_string_t *str = ecma_new_ecma_string_from_utf8(str_p, str_size);
-  return ecma_string_to_number(str);
-}
+  ecma_string_t *str = ecma_new_ecma_string_from_utf8 (str_p, str_size);
+  return ecma_string_to_number (str);
+} /* ecma_utf8_string_to_number */
 #endif /* JUST_INT */
 /**
  * ECMA-defined conversion of UInt32 to String (zero-terminated).
@@ -909,7 +909,7 @@ uint32_t
 ecma_number_to_uint32 (ecma_number_t num) /**< ecma-number */
 {
   return (uint32_t) num;
-}
+} /* ecma_number_to_uint32 */
 #endif
 
 /**
