@@ -394,7 +394,11 @@ ecma_make_boolean_value (bool boolean_value) /**< raw bool value from which the 
  * @return ecma-value
  */
 inline ecma_value_t JERRY_ATTR_CONST JERRY_ATTR_ALWAYS_INLINE
+#ifndef JUST_INT
 ecma_make_integer_value (ecma_integer_value_t integer_value) /**< integer number to be encoded */
+#else
+ecma_make_integer_value (ecma_number_t integer_value) /**< integer number to be encoded */
+#endif /* JUST_INT */
 {
   JERRY_ASSERT (ECMA_IS_INTEGER_NUMBER (integer_value));
 
@@ -466,6 +470,7 @@ ecma_is_number_equal_to_positive_zero (ecma_number_t ecma_number) /**< number */
 ecma_value_t
 ecma_make_number_value (ecma_number_t ecma_number) /**< number to be encoded */
 {
+#ifndef JUST_INT
   ecma_integer_value_t integer_value = (ecma_integer_value_t) ecma_number;
 
   if ((ecma_number_t) integer_value == ecma_number
@@ -476,6 +481,9 @@ ecma_make_number_value (ecma_number_t ecma_number) /**< number to be encoded */
   }
 
   return ecma_create_float_number (ecma_number);
+#else
+  return ecma_make_integer_value (ecma_number);
+#endif /* JUST_INT */
 } /* ecma_make_number_value */
 
 /**
@@ -486,12 +494,16 @@ ecma_make_number_value (ecma_number_t ecma_number) /**< number to be encoded */
 ecma_value_t
 ecma_make_int32_value (int32_t int32_number) /**< int32 number to be encoded */
 {
+#ifndef JUST_INT
   if (ECMA_IS_INTEGER_NUMBER (int32_number))
   {
     return ecma_make_integer_value ((ecma_integer_value_t) int32_number);
   }
 
   return ecma_create_float_number ((ecma_number_t) int32_number);
+#else
+  return ecma_make_integer_value ((ecma_number_t) int32_number);
+#endif /* JUST_INT */
 } /* ecma_make_int32_value */
 
 /**
@@ -502,12 +514,16 @@ ecma_make_int32_value (int32_t int32_number) /**< int32 number to be encoded */
 ecma_value_t
 ecma_make_uint32_value (uint32_t uint32_number) /**< uint32 number to be encoded */
 {
+#ifndef JUST_INT
   if (uint32_number <= ECMA_INTEGER_NUMBER_MAX)
   {
     return ecma_make_integer_value ((ecma_integer_value_t) uint32_number);
   }
 
   return ecma_create_float_number ((ecma_number_t) uint32_number);
+#else
+  return ecma_make_integer_value ((ecma_number_t) uint32_number);
+#endif /* JUST_INT */
 } /* ecma_make_uint32_value */
 
 /**
@@ -593,6 +609,7 @@ ecma_make_collection_chunk_value (const ecma_collection_chunk_t *collection_chun
  *
  * @return integer value
  */
+#ifndef JUST_INT
 inline ecma_integer_value_t JERRY_ATTR_CONST JERRY_ATTR_ALWAYS_INLINE
 ecma_get_integer_from_value (ecma_value_t value) /**< ecma value */
 {
@@ -600,6 +617,13 @@ ecma_get_integer_from_value (ecma_value_t value) /**< ecma value */
 
   return ((ecma_integer_value_t) value) >> ECMA_DIRECT_SHIFT;
 } /* ecma_get_integer_from_value */
+#else
+inline ecma_number_t JERRY_ATTR_CONST JERRY_ATTR_ALWAYS_INLINE
+ecma_get_integer_from_value (ecma_value_t value) /**< ecma value */
+{
+  return ((ecma_number_t) value) >> ECMA_DIRECT_SHIFT;
+} /* ecma_get_integer_from_value */
+#endif /* JUST_INT */
 
 /**
  * Get floating point value from an ecma value
@@ -818,6 +842,7 @@ ecma_value_assign_value (ecma_value_t *value_p, /**< [in, out] ecma value */
  *
  * @return updated ecma value
  */
+#ifndef JUST_INT
 ecma_value_t
 ecma_update_float_number (ecma_value_t float_value, /**< original float value */
                           ecma_number_t new_number) /**< updated number value */
@@ -838,13 +863,14 @@ ecma_update_float_number (ecma_value_t float_value, /**< original float value */
   *number_p = new_number;
   return float_value;
 } /* ecma_update_float_number */
-
+#endif /* JUST_INT */
 /**
  * Assign a float number to an ecma-value
  *
  * Note:
  *      value previously stored in the property is freed
  */
+#ifndef JUST_INT
 static void
 ecma_value_assign_float_number (ecma_value_t *value_p, /**< [in, out] ecma value */
                                 ecma_number_t ecma_number) /**< number to assign */
@@ -865,6 +891,7 @@ ecma_value_assign_float_number (ecma_value_t *value_p, /**< [in, out] ecma value
 
   *value_p = ecma_create_float_number (ecma_number);
 } /* ecma_value_assign_float_number */
+#endif /* JUST_INT */
 
 /**
  * Assign a number to an ecma-value
@@ -876,6 +903,7 @@ void
 ecma_value_assign_number (ecma_value_t *value_p, /**< [in, out] ecma value */
                           ecma_number_t ecma_number) /**< number to assign */
 {
+#ifndef JUST_INT
   ecma_integer_value_t integer_value = (ecma_integer_value_t) ecma_number;
 
   if ((ecma_number_t) integer_value == ecma_number
@@ -892,6 +920,15 @@ ecma_value_assign_number (ecma_value_t *value_p, /**< [in, out] ecma value */
   }
 
   ecma_value_assign_float_number (value_p, ecma_number);
+#else
+  if (ecma_get_value_type_field (*value_p) != ECMA_TYPE_DIRECT
+      && ecma_get_value_type_field (*value_p) != ECMA_TYPE_OBJECT)
+  {
+    ecma_free_value (*value_p);
+  }
+  *value_p = ecma_make_integer_value (ecma_number);
+  return;
+#endif /* JUST_INT */
 } /* ecma_value_assign_number */
 
 /**

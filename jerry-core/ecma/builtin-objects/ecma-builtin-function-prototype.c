@@ -298,8 +298,11 @@ ecma_builtin_function_prototype_object_bind (ecma_value_t this_arg, /**< this ar
       {
         *args_p++ = ecma_copy_value_if_not_object (arguments_list_p[i]);
       }
-
+#ifndef JUST_INT
       ecma_value_t args_len_or_this = ecma_make_integer_value ((ecma_integer_value_t) arguments_number);
+#else
+      ecma_value_t args_len_or_this = ecma_make_integer_value ((ecma_number_t) arguments_number);
+#endif /* JUST_INT */
       ext_function_p->u.bound_function.args_len_or_this = args_len_or_this;
     }
 

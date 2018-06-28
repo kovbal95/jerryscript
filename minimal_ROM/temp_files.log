@@ -1,0 +1,6 @@
+../tests/unit-core/test-string-to-number.c:78
+../jerry-core/ecma/base/ecma-helpers-string.c:1005
+../jerry-core/ecma/builtin-objects/ecma-builtin-date.c:67
+../jerry-core/ecma/builtin-objects/ecma-builtin-global.c:494
+../jerry-core/ecma/builtin-objects/ecma-builtin-json.c:379
+../jerry-core/parser/js/js-lexer.c:1759

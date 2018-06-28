@@ -965,8 +965,11 @@ ecma_op_bound_function_try_to_lazy_instantiate_property (ecma_object_t *object_p
     ecma_object_t *target_func_obj_p;
     target_func_obj_p = ECMA_GET_INTERNAL_VALUE_POINTER (ecma_object_t,
                                                          ext_function_p->u.bound_function.target_function);
-
+#ifndef JUST_INT
     ecma_integer_value_t length = 0;
+#else
+    ecma_number_t length = 0;
+#endif /* JUST_INT */
 
     if (ecma_object_get_class_name (target_func_obj_p) == LIT_MAGIC_STRING_FUNCTION_UL)
     {
@@ -977,7 +980,11 @@ ecma_op_bound_function_try_to_lazy_instantiate_property (ecma_object_t *object_p
       JERRY_ASSERT (ecma_is_value_integer_number (get_len_value));
 
       ecma_value_t args_len_or_this = ext_function_p->u.bound_function.args_len_or_this;
+#ifndef JUST_INT
       ecma_integer_value_t args_length = 1;
+#else
+      ecma_number_t args_length = 1;
+#endif /* JUST_INT */
 
       if (ecma_is_value_integer_number (args_len_or_this))
       {

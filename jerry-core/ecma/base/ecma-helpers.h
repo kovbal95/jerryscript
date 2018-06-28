@@ -162,7 +162,11 @@ bool JERRY_ATTR_CONST ecma_is_value_collection_chunk (ecma_value_t value);
 void ecma_check_value_type_is_spec_defined (ecma_value_t value);
 
 ecma_value_t JERRY_ATTR_CONST ecma_make_boolean_value (bool boolean_value);
+#ifndef JUST_INT
 ecma_value_t JERRY_ATTR_CONST ecma_make_integer_value (ecma_integer_value_t integer_value);
+#else
+ecma_value_t JERRY_ATTR_CONST ecma_make_integer_value (ecma_number_t integer_value);
+#endif /* JUST_INT */
 ecma_value_t ecma_make_nan_value (void);
 ecma_value_t ecma_make_number_value (ecma_number_t ecma_number);
 ecma_value_t ecma_make_int32_value (int32_t int32_number);
@@ -172,7 +176,11 @@ ecma_value_t JERRY_ATTR_PURE ecma_make_magic_string_value (lit_magic_string_id_t
 ecma_value_t JERRY_ATTR_PURE ecma_make_object_value (const ecma_object_t *object_p);
 ecma_value_t JERRY_ATTR_PURE ecma_make_error_reference_value (const ecma_error_reference_t *error_ref_p);
 ecma_value_t JERRY_ATTR_PURE ecma_make_collection_chunk_value (const ecma_collection_chunk_t *collection_chunk_p);
+#ifndef JUST_INT
 ecma_integer_value_t JERRY_ATTR_CONST ecma_get_integer_from_value (ecma_value_t value);
+#else
+ecma_number_t JERRY_ATTR_CONST ecma_get_integer_from_value (ecma_value_t value);
+#endif /* JUST_INT */
 ecma_number_t JERRY_ATTR_PURE ecma_get_float_from_value (ecma_value_t value);
 ecma_number_t JERRY_ATTR_PURE ecma_get_number_from_value (ecma_value_t value);
 ecma_string_t JERRY_ATTR_PURE *ecma_get_string_from_value (ecma_value_t value);
@@ -278,7 +286,9 @@ ecma_number_t ecma_number_get_prev (ecma_number_t num);
 ecma_number_t ecma_number_get_next (ecma_number_t num);
 ecma_number_t ecma_number_trunc (ecma_number_t num);
 ecma_number_t ecma_number_calc_remainder (ecma_number_t left_num, ecma_number_t right_num);
+#ifndef JUST_INT
 ecma_value_t ecma_integer_multiply (ecma_integer_value_t left_integer, ecma_integer_value_t right_integer);
+#endif /* JUST_INT */
 lit_utf8_size_t ecma_number_to_decimal (ecma_number_t num, lit_utf8_byte_t *out_digits_p, int32_t *out_decimal_exp_p);
 lit_utf8_size_t ecma_number_to_binary_floating_point_number (ecma_number_t num,
                                                              lit_utf8_byte_t *out_digits_p,

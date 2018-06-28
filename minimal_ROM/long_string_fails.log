@@ -1,0 +1,6 @@
+[216/351] build/tests/jerry_tests/bin/jerry tests/jerry/regression-test-issue-1555.js: FAIL (1)
+[216/351] build/tests/jerry_tests-debug/bin/jerry tests/jerry/regression-test-issue-1555.js: FAIL (120)
+[216/351] build/tests/jerry_tests-debug-cpointer_32bit/bin/jerry tests/jerry/regression-test-issue-1555.js: FAIL (120)
+[239/374] build/tests/jerry_tests-es2015_subset-debug/bin/jerry tests/jerry/regression-test-issue-1555.js: FAIL (120)
+[216/351] build/tests/jerry_tests-es5.1-debug/bin/jerry tests/jerry/regression-test-issue-1555.js: FAIL (120)
+[216/351] build/tests/jerry_tests-debug-external_context/bin/jerry tests/jerry/regression-test-issue-1555.js: FAIL (120)

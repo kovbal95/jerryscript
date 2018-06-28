@@ -1837,7 +1837,11 @@ lexer_construct_number_object (parser_context_t *context_p, /**< context */
 void
 lexer_convert_push_number_to_push_literal (parser_context_t *context_p) /**< context */
 {
+#ifndef JUST_INT
   ecma_integer_value_t value;
+#else
+  ecma_number_t value;
+#endif /* JUST_INT */
   bool two_literals = !PARSER_IS_BASIC_OPCODE (context_p->last_cbc_opcode);
 
   if (context_p->last_cbc_opcode == CBC_PUSH_NUMBER_0
@@ -1848,13 +1852,21 @@ lexer_convert_push_number_to_push_literal (parser_context_t *context_p) /**< con
   else if (context_p->last_cbc_opcode == CBC_PUSH_NUMBER_POS_BYTE
            || context_p->last_cbc_opcode == PARSER_TO_EXT_OPCODE (CBC_EXT_PUSH_LITERAL_PUSH_NUMBER_POS_BYTE))
   {
+#ifndef JUST_INT
     value = ((ecma_integer_value_t) context_p->last_cbc.value) + 1;
+#else
+    value = ((ecma_number_t) context_p->last_cbc.value) + 1;
+#endif /* JUST_INT */
   }
   else
   {
     JERRY_ASSERT (context_p->last_cbc_opcode == CBC_PUSH_NUMBER_NEG_BYTE
                   || context_p->last_cbc_opcode == PARSER_TO_EXT_OPCODE (CBC_EXT_PUSH_LITERAL_PUSH_NUMBER_NEG_BYTE));
+#ifndef JUST_INT
     value = -((ecma_integer_value_t) context_p->last_cbc.value) - 1;
+#else
+    value = -((ecma_number_t) context_p->last_cbc.value) - 1;
+#endif /* JUST_INT */
   }
 
   ecma_value_t lit_value = ecma_make_integer_value (value);

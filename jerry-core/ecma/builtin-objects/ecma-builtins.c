@@ -678,7 +678,7 @@ ecma_builtin_try_to_instantiate_property (ecma_object_t *object_p, /**< object *
           ECMA_NUMBER_SQRT2,
           ECMA_NUMBER_SQRT_1_2
         };
-        #else /* JUST_INT defined */
+        #else /* JUST_INT */
         static const ecma_number_t builtin_number_list[] =
         {
           ECMA_NUMBER_MAX_VALUE,

@@ -1,0 +1,2 @@
+[5/351] build/tests/jerry_tests/bin/jerry tests/jerry/arithmetics-2.js: FAIL (10)
+[6/351] build/tests/jerry_tests/bin/jerry tests/jerry/arithmetics-bignums.js: FAIL (10)

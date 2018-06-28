@@ -330,12 +330,21 @@ ecma_gc_mark (ecma_object_t *object_p) /**< object to mark from */
           break;
         }
 
+#ifndef JUST_INT
         ecma_integer_value_t args_length = ecma_get_integer_from_value (args_len_or_this);
         ecma_value_t *args_p = (ecma_value_t *) (ext_function_p + 1);
 
         JERRY_ASSERT (args_length > 0);
 
         for (ecma_integer_value_t i = 0; i < args_length; i++)
+#else
+        ecma_number_t args_length = ecma_get_integer_from_value (args_len_or_this);
+        ecma_value_t *args_p = (ecma_value_t *) (ext_function_p + 1);
+
+        JERRY_ASSERT (args_length > 0);
+
+        for (ecma_number_t i = 0; i < args_length; i++)
+#endif /* JUST_INT */
         {
           if (ecma_is_value_object (args_p[i]))
           {
@@ -725,11 +734,17 @@ ecma_gc_free_object (ecma_object_t *object_p) /**< object to free */
         ecma_dealloc_extended_object (object_p, sizeof (ecma_extended_object_t));
         return;
       }
-
+#ifndef JUST_INT
       ecma_integer_value_t args_length = ecma_get_integer_from_value (args_len_or_this);
       ecma_value_t *args_p = (ecma_value_t *) (ext_function_p + 1);
 
       for (ecma_integer_value_t i = 0; i < args_length; i++)
+#else
+      ecma_number_t args_length = ecma_get_integer_from_value (args_len_or_this);
+      ecma_value_t *args_p = (ecma_value_t *) (ext_function_p + 1);
+
+      for (ecma_number_t i = 0; i < args_length; i++)
+#endif /* JUST_INT */
       {
         ecma_free_value_if_not_object (args_p[i]);
       }

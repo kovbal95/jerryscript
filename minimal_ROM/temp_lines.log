@@ -1,0 +1,19 @@
+47:align_column_to_tab (parser_line_counter_t column) /**< current column */
+59:lexer_hex_to_character (parser_context_t *context_p, /**< context */
+107:lexer_skip_spaces (parser_context_t *context_p) /**< context */
+437:lexer_parse_identifier (parser_context_t *context_p, /**< context */
+566:lexer_parse_string (parser_context_t *context_p) /**< context */
+839:lexer_parse_number (parser_context_t *context_p) /**< context */
+1058:lexer_next_token (parser_context_t *context_p) /**< context */
+1301:lexer_check_colon (parser_context_t *context_p) /**< context */
+1319:lexer_check_arrow (parser_context_t *context_p) /**< context */
+1363:lexer_process_char_literal (parser_context_t *context_p, /**< context */
+1437:lexer_construct_literal_object (parser_context_t *context_p, /**< context */
+1747:lexer_construct_number_object (parser_context_t *context_p, /**< context */
+1838:lexer_convert_push_number_to_push_literal (parser_context_t *context_p) /**< context */
+1920:lexer_construct_function_object (parser_context_t *context_p, /**< context */
+1967:lexer_construct_regexp_object (parser_context_t *context_p, /**< context */
+2179:lexer_expect_identifier (parser_context_t *context_p, /**< context */
+2247:lexer_expect_object_literal_id (parser_context_t *context_p, /**< context */
+2334:lexer_scan_identifier (parser_context_t *context_p, /**< context */
+2387:lexer_compare_identifier_to_current (parser_context_t *context_p,        /**< context */

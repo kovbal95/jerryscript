@@ -103,7 +103,9 @@ typedef uint32_t ecma_value_t;
 /**
  * Type for directly encoded integer numbers in JerryScript.
  */
+#ifndef JUST_INT
 typedef int32_t ecma_integer_value_t;
+#endif /* JUST_INT */
 
 #if UINTPTR_MAX <= UINT32_MAX
 

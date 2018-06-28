@@ -58,7 +58,11 @@ vm_op_get_value (ecma_value_t object, /**< base object */
 
     if (ecma_is_value_integer_number (property))
     {
+#ifndef JUST_INT
       ecma_integer_value_t int_value = ecma_get_integer_from_value (property);
+#else
+      ecma_number_t int_value = ecma_get_integer_from_value (property);
+#endif /* JUST_INT */
 
       if (int_value >= 0 && int_value <= ECMA_DIRECT_STRING_MAX_IMM)
       {
@@ -1001,13 +1005,21 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         }
         case VM_OC_PUSH_POS_BYTE:
         {
+#ifndef JUST_INT
           ecma_integer_value_t number = *byte_code_p++;
+#else
+          ecma_number_t number = *byte_code_p++;
+#endif /* JUST_INT */
           *stack_top_p++ = ecma_make_integer_value (number + 1);
           continue;
         }
         case VM_OC_PUSH_NEG_BYTE:
         {
+#ifndef JUST_INT
           ecma_integer_value_t number = *byte_code_p++;
+#else
+          ecma_number_t number = *byte_code_p++;
+#endif /* JUST_INT */
           *stack_top_p++ = ecma_make_integer_value (-(number + 1));
           continue;
         }
@@ -1020,7 +1032,11 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         }
         case VM_OC_PUSH_LIT_POS_BYTE:
         {
+#ifndef JUST_INT
           ecma_integer_value_t number = *byte_code_p++;
+#else
+          ecma_number_t number = *byte_code_p++;
+#endif /* JUST_INT */
           stack_top_p[0] = left_value;
           stack_top_p[1] = ecma_make_integer_value (number + 1);
           stack_top_p += 2;
@@ -1028,7 +1044,11 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         }
         case VM_OC_PUSH_LIT_NEG_BYTE:
         {
+#ifndef JUST_INT
           ecma_integer_value_t number = *byte_code_p++;
+#else
+          ecma_number_t number = *byte_code_p++;
+#endif /* JUST_INT */
           stack_top_p[0] = left_value;
           stack_top_p[1] = ecma_make_integer_value (-(number + 1));
           stack_top_p += 2;
@@ -1286,9 +1306,13 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
           {
             result = left_value;
             left_value = ECMA_VALUE_UNDEFINED;
-
+#ifndef JUST_INT
             ecma_integer_value_t int_value = (ecma_integer_value_t) result;
             ecma_integer_value_t int_increase = 0;
+#else
+            ecma_number_t int_value = (ecma_number_t) result;
+            ecma_number_t int_increase = 0;
+#endif /* JUST_INT */
 
             if (opcode_flags & VM_OC_DECREMENT_OPERATOR_FLAG)
             {
@@ -1401,7 +1425,7 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
               opcode_data &= (uint32_t) ~VM_OC_PUT_BLOCK;
             }
           }
-
+#ifndef JUST_INT
           if (ecma_is_value_integer_number (result))
           {
             result = ecma_make_number_value (result_number + increase);
@@ -1410,6 +1434,9 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
           {
             result = ecma_update_float_number (result, result_number + increase);
           }
+#else
+          result = ecma_make_number_value (result_number + increase);
+#endif /* JUST_INT */
           break;
         }
         case VM_OC_ASSIGN:
@@ -1733,6 +1760,7 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         }
         case VM_OC_ADD:
         {
+#ifndef JUST_INT
           if (ecma_are_values_integer_numbers (left_value, right_value))
           {
             ecma_integer_value_t left_integer = ecma_get_integer_from_value (left_value);
@@ -1769,10 +1797,42 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
           {
             goto error;
           }
+#else
+          if (ecma_is_value_string (left_value)
+              || ecma_is_value_string (right_value))
+          {
+            ecma_value_t str_left_value = ecma_op_to_string (left_value);
+
+            if (ECMA_IS_VALUE_ERROR (str_left_value))
+            {
+              return str_left_value;
+            }
+
+            ecma_string_t *string1_p = ecma_get_string_from_value (str_left_value);
+
+            ecma_value_t str_right_value = ecma_op_to_string (right_value);
+
+            if (ECMA_IS_VALUE_ERROR (str_right_value))
+            {
+              ecma_deref_ecma_string (string1_p);
+              return str_right_value;
+            }
+
+            ecma_string_t *string2_p = ecma_get_string_from_value (str_right_value);
+
+            string1_p = ecma_concat_ecma_strings (string1_p, string2_p);
+            result = ecma_make_string_value (string1_p);
+
+            ecma_deref_ecma_string (string2_p);
+          } else {
+            result = left_value + right_value;
+          }
+#endif /* JUST_INT */
           break;
         }
         case VM_OC_SUB:
         {
+#ifndef JUST_INT
           JERRY_STATIC_ASSERT (ECMA_INTEGER_NUMBER_MAX * 2 <= INT32_MAX
                                && ECMA_INTEGER_NUMBER_MIN * 2 >= INT32_MIN,
                                doubled_ecma_numbers_must_fit_into_int32_range);
@@ -1818,10 +1878,16 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
           {
             goto error;
           }
+#else
+          ecma_number_t left_integer = ecma_get_integer_from_value (left_value);
+          ecma_number_t right_integer = ecma_get_integer_from_value (right_value);
+          result = ecma_make_integer_value(left_integer - right_integer);
+#endif /* JUST_INT */
           break;
         }
         case VM_OC_MUL:
         {
+#ifndef JUST_INT
           JERRY_ASSERT (!ECMA_IS_VALUE_ERROR (left_value)
                         && !ECMA_IS_VALUE_ERROR (right_value));
 
@@ -1880,10 +1946,17 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
           {
             goto error;
           }
+#else
+          ecma_number_t left_integer = ecma_get_integer_from_value (left_value);
+          ecma_number_t right_integer = ecma_get_integer_from_value (right_value);
+          result = ecma_make_integer_value (left_integer * right_integer);
+          printf("%d * %d = %d\n", left_integer, right_integer, result);
+#endif /* JUST_INT */
           break;
         }
         case VM_OC_DIV:
         {
+#ifndef JUST_INT
           JERRY_ASSERT (!ECMA_IS_VALUE_ERROR (left_value)
                         && !ECMA_IS_VALUE_ERROR (right_value));
 
@@ -1895,10 +1968,18 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
           {
             goto error;
           }
+#else
+          ecma_number_t left_integer = ecma_get_integer_from_value (left_value);
+          ecma_number_t right_integer = ecma_get_integer_from_value (right_value);
+          printf("%d / %d = ?\n", left_integer, right_integer);
+          result = ecma_make_integer_value (left_integer / right_integer);
+          printf("%d / %d = %d\n", left_integer, right_integer, result);
+#endif /* JUST_INT */
           break;
         }
         case VM_OC_MOD:
         {
+#ifndef JUST_INT
           JERRY_ASSERT (!ECMA_IS_VALUE_ERROR (left_value)
                         && !ECMA_IS_VALUE_ERROR (right_value));
 
@@ -1927,6 +2008,9 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
           {
             goto error;
           }
+#else
+          result = left_value % right_value;
+#endif /*  */
           break;
         }
         case VM_OC_EQUAL:
@@ -2041,8 +2125,13 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
 
           if (ecma_are_values_integer_numbers (left_value, right_value))
           {
+#ifndef JUST_INT
             ecma_integer_value_t left_integer = ecma_get_integer_from_value (left_value);
             ecma_integer_value_t right_integer = ecma_get_integer_from_value (right_value);
+#else
+            ecma_number_t left_integer = ecma_get_integer_from_value (left_value);
+            ecma_number_t right_integer = ecma_get_integer_from_value (right_value);
+#endif /* JUST_INT */
             result = ecma_make_int32_value ((int32_t) (left_integer << (right_integer & 0x1f)));
             break;
           }
@@ -2064,8 +2153,13 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
 
           if (ecma_are_values_integer_numbers (left_value, right_value))
           {
-            ecma_integer_value_t left_integer = ecma_get_integer_from_value (left_value);
-            ecma_integer_value_t right_integer = ecma_get_integer_from_value (right_value);
+            #ifndef JUST_INT
+                        ecma_integer_value_t left_integer = ecma_get_integer_from_value (left_value);
+                        ecma_integer_value_t right_integer = ecma_get_integer_from_value (right_value);
+            #else
+                        ecma_number_t left_integer = ecma_get_integer_from_value (left_value);
+                        ecma_number_t right_integer = ecma_get_integer_from_value (right_value);
+            #endif /* JUST_INT */
             result = ecma_make_integer_value (left_integer >> (right_integer & 0x1f));
             break;
           }
@@ -2088,7 +2182,11 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
           if (ecma_are_values_integer_numbers (left_value, right_value))
           {
             uint32_t left_uint32 = (uint32_t) ecma_get_integer_from_value (left_value);
+#ifndef JUST_INT
             ecma_integer_value_t right_integer = ecma_get_integer_from_value (right_value);
+#else
+            ecma_number_t right_integer = ecma_get_integer_from_value (right_value);
+#endif /* JUST_INT */
             result = ecma_make_uint32_value (left_uint32 >> (right_integer & 0x1f));
             break;
           }
@@ -2107,8 +2205,11 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         {
           if (ecma_are_values_integer_numbers (left_value, right_value))
           {
+#ifndef JUST_INT
             bool is_less = (ecma_integer_value_t) left_value < (ecma_integer_value_t) right_value;
-
+#else
+            bool is_less = (ecma_number_t) left_value < (ecma_number_t) right_value;
+#endif /* JUST_INT */
             /* This is a lookahead to the next opcode to improve performance.
              * If it is CBC_BRANCH_IF_TRUE_BACKWARD, execute it. */
             if (*byte_code_p <= CBC_BRANCH_IF_TRUE_BACKWARD_3 && *byte_code_p >= CBC_BRANCH_IF_TRUE_BACKWARD)
@@ -2170,9 +2271,13 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         {
           if (ecma_are_values_integer_numbers (left_value, right_value))
           {
+#ifndef JUST_INT
             ecma_integer_value_t left_integer = (ecma_integer_value_t) left_value;
             ecma_integer_value_t right_integer = (ecma_integer_value_t) right_value;
-
+#else
+            ecma_number_t left_integer = (ecma_number_t) left_value;
+            ecma_number_t right_integer = (ecma_number_t) right_value;
+#endif /* JUST_INT */
             *stack_top_p++ = ecma_make_boolean_value (left_integer > right_integer);
             continue;
           }
@@ -2200,8 +2305,13 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         {
           if (ecma_are_values_integer_numbers (left_value, right_value))
           {
+#ifndef JUST_INT
             ecma_integer_value_t left_integer = (ecma_integer_value_t) left_value;
             ecma_integer_value_t right_integer = (ecma_integer_value_t) right_value;
+#else
+            ecma_number_t left_integer = (ecma_number_t) left_value;
+            ecma_number_t right_integer = (ecma_number_t) right_value;
+#endif /* JUST_INT */
 
             *stack_top_p++ = ecma_make_boolean_value (left_integer <= right_integer);
             continue;
@@ -2230,8 +2340,13 @@ vm_loop (vm_frame_ctx_t *frame_ctx_p) /**< frame context */
         {
           if (ecma_are_values_integer_numbers (left_value, right_value))
           {
+#ifndef JUST_INT
             ecma_integer_value_t left_integer = (ecma_integer_value_t) left_value;
             ecma_integer_value_t right_integer = (ecma_integer_value_t) right_value;
+#else
+            ecma_number_t left_integer = (ecma_number_t) left_value;
+            ecma_number_t right_integer = (ecma_number_t) right_value;
+#endif /* JUST_INT */
 
             *stack_top_p++ = ecma_make_boolean_value (left_integer >= right_integer);
             continue;

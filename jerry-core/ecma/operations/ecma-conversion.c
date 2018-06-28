@@ -277,8 +277,11 @@ ecma_op_to_number (ecma_value_t value) /**< ecma value */
   {
     return ecma_make_nan_value ();
   }
-
+#ifndef JUST_INT
   ecma_integer_value_t num = 0;
+#else
+  ecma_number_t num = 0;
+#endif /* JUST_INT */
 
   if (ecma_is_value_null (value))
   {
@@ -398,7 +401,11 @@ ecma_op_to_string (ecma_value_t value) /**< ecma value */
     }
     else if (ecma_is_value_integer_number (value))
     {
+#ifndef JUST_INT
       ecma_integer_value_t num = ecma_get_integer_from_value (value);
+#else
+      ecma_number_t num = ecma_get_integer_from_value (value);
+#endif
 
       if (num < 0)
       {

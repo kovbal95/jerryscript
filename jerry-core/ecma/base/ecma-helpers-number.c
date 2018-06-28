@@ -22,10 +22,10 @@
  * \addtogroup ecmahelpers Helpers for operations with ECMA data types
  * @{
  */
-
+/*
 JERRY_STATIC_ASSERT (sizeof (ecma_value_t) == sizeof (ecma_integer_value_t),
                      size_of_ecma_value_t_must_be_equal_to_the_size_of_ecma_integer_value_t);
-
+*/
 JERRY_STATIC_ASSERT (ECMA_DIRECT_SHIFT == ECMA_VALUE_SHIFT + 1,
                      currently_directly_encoded_values_has_one_extra_flag);
 
@@ -401,7 +401,7 @@ ecma_number_is_zero (ecma_number_t num) /**< ecma-number */
 {
   return num==0;
 } /* ecma_number_is_zero */
-#endif
+#endif /* JUST_INT */
 
 /**
  * Check if number is infinity
@@ -643,12 +643,11 @@ ecma_number_get_prev (ecma_number_t num) /**< ecma-number */
                            fraction);
 } /* ecma_number_get_prev */
 #else /* JUST_INT */
-/* JUST_INT */
 ecma_number_t
 ecma_number_get_prev (ecma_number_t num) /**< ecma-number */
 {
-  if (num == 0) {
-    return 0;
+  if (num == ECMA_NUMBER_MIN_VALUE) {
+    return num;
   }
   return num-1;
 }
@@ -694,11 +693,13 @@ ecma_number_get_next (ecma_number_t num) /**< ecma-number */
                            fraction);
 } /* ecma_number_get_next */
 #else /* JUST_INT */
-/* JUST_INT */
 ecma_number_t
 ecma_number_get_next (ecma_number_t num) /**< ecma-number */
 {
-  if (num == UINT32_MAX) return num;
+  if (num == ECMA_NUMBER_MAX_VALUE)
+  {
+    return num;
+  }
   return num+1;
 }
 #endif /* JUST_INT */
@@ -749,7 +750,7 @@ ecma_number_trunc (ecma_number_t num) /**< ecma-number */
 {
   return num;
 } /* ecma_number_trunc */
-#endif
+#endif /* JUST_INT */
 
 /**
  * Calculate remainder of division of two numbers,
@@ -788,6 +789,7 @@ ecma_number_calc_remainder (ecma_number_t left_num, /**< left operand */
  *
  * @return number - result of multiplication.
  */
+#ifndef JUST_INT
 inline ecma_value_t JERRY_ATTR_ALWAYS_INLINE
 ecma_integer_multiply (ecma_integer_value_t left_integer, /**< left operand */
                        ecma_integer_value_t right_integer) /**< right operand */
@@ -807,6 +809,7 @@ ecma_integer_multiply (ecma_integer_value_t left_integer, /**< left operand */
 #endif /* defined (__GNUC__) || defined (__clang__) */
   return ecma_make_integer_value (left_integer * right_integer);
 } /* ecma_integer_multiply */
+#endif /* JUST_INT */
 
 /**
  * @}
